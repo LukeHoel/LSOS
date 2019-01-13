@@ -1,10 +1,10 @@
-namespace kernel_main {
+namespace kernel {
 	#include <stdbool.h>
 	#include <stddef.h>
 	#include <stdint.h>
 	 
 	//my stuff
-	#include "Cpp/tty.cpp"
+	#include "../cpp/tty.cpp"
 	using namespace tty_driver;
 
 	/* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -24,7 +24,8 @@ namespace kernel_main {
 		terminal_initialize();
 		 
 		/* Newline support is left as an exercise. */
-		terminal_writestring("Using other people's code is for losers");
+		terminal_writestring("Hello there!\n");
+		terminal_writestring("General Kenobi, you are a bold one!\n");
 		}
 	}
 }

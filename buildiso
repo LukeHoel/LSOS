@@ -1,11 +1,11 @@
 #Build Assembly bootstrapper
-i686-elf-as Src/Kernel/boot.s -o Build/boot.o
+i686-elf-as src/kernel/boot.s -o build/boot.o
 #Build high level kernel (c++)
-i686-elf-g++ -c Src/Kernel/kernel.cpp -o Build/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+i686-elf-g++ -c src/kernel/kernel.cpp -o build/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
 #Build linker
-i686-elf-gcc -T Src/linker.ld -o Build/myos.bin -ffreestanding -O2 -nostdlib Build/boot.o Build/kernel.o -lgcc
+i686-elf-gcc -T src/linker.ld -o build/myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
 #grub multiboot stuff
-cd Build
+cd build
 if grub-file --is-x86-multiboot myos.bin; then
   echo multiboot confirmed
 else

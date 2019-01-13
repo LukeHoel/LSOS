@@ -1,0 +1,22 @@
+#Build Assemly bootstrapper
+i686-elf-as Src/boot.s -o Build/boot.o
+#Build high level kernel
+i686-elf-gcc -c Src/kernel.c -o Build/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+#Build linker
+i686-elf-gcc -T Src/linker.ld -o Build/myos.bin -ffreestanding -O2 -nostdlib Build/boot.o Build/kernel.o -lgcc
+#grub multiboot stuff
+cd Build
+if grub-file --is-x86-multiboot myos.bin; then
+  echo multiboot confirmed
+else
+  echo the file is not multiboot
+fi
+#do some iso building, dropping iso in home directory
+cp myos.bin isodir/boot/myos.bin
+cp grub.cfg isodir/boot/grub/grub.cfg
+if [ -z "$ISODIR" ]
+then
+	grub-mkrescue -o ~/myos.iso isodir
+else	
+	grub-mkrescue -o $ISODIR/myos.iso isodir
+fi

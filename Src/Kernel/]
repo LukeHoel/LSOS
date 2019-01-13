@@ -4,8 +4,8 @@ namespace kernel_main {
 	#include <stdint.h>
 	 
 	//my stuff
-	#include "Cpp/terminal.cpp"
-	using namespace terminal_driver;
+	#include "Cpp/tty.cpp"
+	using namespace tty_driver;
 
 	/* Check if the compiler thinks you are targeting the wrong operating system. */
 	#if defined(__linux__)
@@ -24,7 +24,7 @@ namespace kernel_main {
 		terminal_initialize();
 		 
 		/* Newline support is left as an exercise. */
-		terminal_writestring("Hello World!\n");
+		terminal_writestring("Using other people's code is for losers");
 		}
 	}
 }

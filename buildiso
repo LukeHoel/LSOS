@@ -1,7 +1,8 @@
 #Build Assembly bootstrapper
 i686-elf-as src/kernel/boot.s -o build/boot.o
 #Build high level kernel (c++)
-i686-elf-g++ -c src/kernel/kernel.cpp -o build/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+i686-elf-gcc -c src/kernel/kernel.c -o build/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+#i686-elf-g++ -c src/kernel/kernel.cpp -o build/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
 #Build linker
 i686-elf-gcc -T src/kernel/linker.ld -o build/myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
 #grub multiboot stuff

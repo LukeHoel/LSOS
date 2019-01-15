@@ -67,3 +67,47 @@ void terminal_writestring(const char* data)
 {
         terminal_write(data, strlen(data));
 }
+
+void printInt(int in){
+        //simple mapping algorithm to char 
+        char digits[10] = "0123456789";
+
+        while(in > 9){
+               terminal_putchar(digits[in % 10]);
+               in /= 10;
+        }
+        terminal_putchar(digits[in]);
+}
+
+void kprintf(const char* data, ...);
+
+void kprintf(const char* data, ...){
+       
+        va_list arguments;
+        va_start (arguments, data);
+
+        for(size_t i = 0; i < strlen(data); i++){
+                if(data[i] != '%'){
+                        terminal_putchar(data[i]);        
+                }
+                else{
+                        //go right ahead to next character
+                        i++;
+                        //switch to parser for whatever data type this is
+                        switch(data[i]){
+                                case('c'):
+                                        terminal_putchar(va_arg(arguments, int));
+                                    break;
+                                case('s'):
+        				terminal_writestring(va_arg(arguments, const char*));                                       
+                                    break;
+                                case('d'):
+                                        printInt(va_arg(arguments, int));        
+                                    break;
+                        }
+
+                }
+        }
+
+        va_end(arguments);
+}

@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdarg.h>
 
 //my stuff
 #include "extrafiles/tty.c"
@@ -17,10 +18,13 @@
 
 void kernel_main(void) 
 {
-    /* Initialize terminal interface */
-    terminal_initialize();
+        /* Initialize terminal interface */
+        terminal_initialize();
      
-    /* Newline support is left as an exercise. */
-    terminal_writestring("Hello there!\n");
-    terminal_writestring("General Kenobi, you are a bold one!\n");
+        /* Newline support is left as an exercise. */
+        //terminal_writestring("Hello there!\n");
+        //kprintf("the char is: %c\n", '*');
+        kprintf("the number is: %d\n", 12345);
+        kprintf("the string is: %s\n", "somebody once told me");
+        kprintf("Hello there, %s! you are %c bold one. Also a number: %d", "General Kenobi", 'a', 111256);
 }

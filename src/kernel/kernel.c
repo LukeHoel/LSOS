@@ -20,11 +20,6 @@ void kernel_main(void)
 {
         /* Initialize terminal interface */
         terminal_initialize();
-     
-        /* Newline support is left as an exercise. */
-        //terminal_writestring("Hello there!\n");
-        //kprintf("the char is: %c\n", '*');
-        kprintf("the number is: %d\n", 12345);
-        kprintf("the string is: %s\n", "somebody once told me");
-        kprintf("Hello there, %s! you are %c bold one. Also a number: %d", "General Kenobi", 'a', 111256);
+        //print some cool stuff
+        kprintf("Hello there, %s! you are %c bold one. Also a number: %d\nNewlineTest", "General Kenobi", 'a', 111256);
 }

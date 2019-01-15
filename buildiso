@@ -1,17 +1,49 @@
+#set up colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
 #Build Assembly bootstrapper
 i686-elf-as src/kernel/boot.s -o build/boot.o
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Assembly bootstrapper OK${NC}"
+else
+    echo -e "${RED}Assembly bootstrapper FAILED${NC}"
+    exit 1
+fi
+
 #Build high level kernel (c++)
 i686-elf-gcc -c src/kernel/kernel.c -o build/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 #i686-elf-g++ -c src/kernel/kernel.cpp -o build/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}C files OK${NC}"
+else
+    echo -e "${RED}C files FAILED${NC}"
+    exit 1
+fi
+
 #Build linker
 i686-elf-gcc -T src/kernel/linker.ld -o build/myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Linker OK${NC}"
+else
+    echo -e "${RED}Linker FAILED${NC}"
+    exit 1
+fi
+
 #grub multiboot stuff
 cd build
+
 if grub-file --is-x86-multiboot myos.bin; then
-  echo multiboot confirmed
+  echo -e "${GREEN}Multiboot confirmed${NC}"
 else
-  echo the file is not multiboot
+  echo -e "${RED}The file is not multiboot${NC}"
+  exit 1
 fi
+
 #do some iso building, dropping iso in home directory
 cp myos.bin isodir/boot/myos.bin
 cp grub.cfg isodir/boot/grub/grub.cfg

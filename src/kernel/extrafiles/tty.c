@@ -1,5 +1,4 @@
-#include "vga.h"
-//#include "tty.h"
+#include "vga.c"
 
 size_t strlen(const char* str) 
 {
@@ -8,10 +7,7 @@ size_t strlen(const char* str)
                 len++;
         return len;
 }
- 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
- 
+
 size_t terminal_row;
 size_t terminal_column;
 uint8_t terminal_color;

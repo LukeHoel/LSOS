@@ -4,11 +4,12 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 #Make build directory, if not present
+cd ..
 mkdir build
 mkdir -p build/isodir/boot/grub
 
 #Build Assembly bootstrapper
-i686-elf-as src/kernel/boot.s -o build/boot.o
+i686-elf-as buildfiles/boot.s -o build/boot.o
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Assembly bootstrapper OK${NC}"
@@ -29,7 +30,7 @@ else
 fi
 
 #Build linker
-i686-elf-gcc -T src/kernel/linker.ld -o build/myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
+i686-elf-gcc -T buildfiles/linker.ld -o build/myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Linker OK${NC}"
@@ -50,13 +51,10 @@ fi
 
 #do some iso building, dropping iso in home directory
 cp myos.bin isodir/boot/myos.bin
-cp ../grub.cfg isodir/boot/grub/grub.cfg
+cp ../buildfiles/grub.cfg isodir/boot/grub/grub.cfg
 if [ -z "$ISODIR" ]
 then
 	grub-mkrescue -o ~/myos.iso isodir
 else	
 	grub-mkrescue -o $ISODIR/myos.iso isodir
 fi
-#destroy the build folder
-cd ..
-rm -r build

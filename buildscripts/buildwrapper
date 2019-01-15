@@ -1,0 +1,4 @@
+#run build, then delete build folder
+./buildiso
+cd ..
+rm -r build

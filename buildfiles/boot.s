@@ -35,28 +35,177 @@ undefined behavior.
 stack_bottom:
 .skip 16384 # 16 KiB
 stack_top:
- 
+
 /*
 The linker script specifies _start as the entry point to the kernel and the
 bootloader will jump to this position once the kernel has been loaded. It
 doesn't make sense to return from this function as the bootloader is gone.
 */
 .section .text
+/* start irq declarations */
+.global irq0
+.global irq1
+.global irq2
+.global irq3
+.global irq4
+.global irq5
+.global irq6
+.global irq7
+.global irq8
+.global irq9
+.global irq10
+.global irq11
+.global irq12
+.global irq13
+.global irq14
+.global irq15
+.global load_idt
+.global irq0_handler
+.global irq1_handler
+.global irq2_handler
+.global irq3_handler
+.global irq4_handler
+.global irq5_handler
+.global irq6_handler
+.global irq7_handler
+.global irq8_handler
+.global irq9_handler
+.global irq10_handler
+.global irq11_handler
+.global irq12_handler
+.global irq13_handler
+.global irq14_handler
+.global irq15_handler
+
+.extern irq0_handler
+.extern irq1_handler
+.extern irq2_handler
+.extern irq3_handler
+.extern irq4_handler
+.extern irq5_handler
+.extern irq6_handler
+.extern irq7_handler
+.extern irq8_handler
+.extern irq9_handler
+.extern irq10_handler
+.extern irq11_handler
+.extern irq12_handler
+.extern irq13_handler
+.extern irq14_handler
+.extern irq15_handler
+
+irq0:
+  pusha
+  call irq0_handler
+  popa
+  iret
+ 
+irq1:
+  pusha
+  call irq1_handler
+  popa
+  iret
+ 
+irq2:
+  pusha
+  call irq2_handler
+  popa
+  iret
+ 
+irq3:
+  pusha
+  call irq3_handler
+  popa
+  iret
+ 
+irq4:
+  pusha
+  call irq4_handler
+  popa
+  iret
+ 
+irq5:
+  pusha
+  call irq5_handler
+  popa
+  iret
+ 
+irq6:
+  pusha
+  call irq6_handler
+  popa
+  iret
+ 
+irq7:
+  pusha
+  call irq7_handler
+  popa
+  iret
+ 
+irq8:
+  pusha
+  call irq8_handler
+  popa
+  iret
+ 
+irq9:
+  pusha
+  call irq9_handler
+  popa
+  iret
+ 
+irq10:
+  pusha
+  call irq10_handler
+  popa
+  iret
+ 
+irq11:
+  pusha
+  call irq11_handler
+  popa
+  iret
+ 
+irq12:
+  pusha
+  call irq12_handler
+  popa
+  iret
+ 
+irq13:
+  pusha
+  call irq13_handler
+  popa
+  iret
+ 
+irq14:
+  pusha
+  call irq14_handler
+  popa
+  iret
+ 
+irq15:
+  pusha
+  call irq15_handler
+  popa
+  iret
+ 
+load_idt:
+	movl %edx, 4(%esp)
+	lidt (%edx)
+	sti
+	ret
+
+#end irq declarations
 .global _start
 .type _start, @function
 _start:
+
 	/*
 	The bootloader has loaded us into 32-bit protected mode on a x86
 	machine. Interrupts are disabled. Paging is disabled. The processor
 	state is as defined in the multiboot standard. The kernel has full
-	control of the CPU. The kernel can only make use of hardware features
-	and any code it provides as part of itself. There's no printf
-	function, unless the kernel provides its own <stdio.h> header and a
-	printf implementation. There are no security restrictions, no
-	safeguards, no debugging mechanisms, only what the kernel provides
-	itself. It has absolute and complete power over the
-	machine.
-	*/
+	control of the CPU. The kernel can only make use of hardware features*/
  
 	/*
 	To set up a stack, we set the esp register to point to the top of the
@@ -66,20 +215,9 @@ _start:
 	mov $stack_top, %esp
  
 	/*
-	This is a good place to initialize crucial processor state before the
-	high-level kernel is entered. It's best to minimize the early
-	environment where crucial features are offline. Note that the
-	processor is not fully initialized yet: Features such as floating
-	point instructions and instruction set extensions are not initialized
-	yet. The GDT should be loaded here. Paging should be enabled here.
-	C++ features such as global constructors and exceptions will require
-	runtime support to work as well.
-	*/
- 
-	/*
 	Enter the high-level kernel. The ABI requires the stack is 16-byte
 	aligned at the time of the call instruction (which afterwards pushes
-	the return pointer of size 4 bytes). The stack was originally 16-byte
+	the return pointer of size 3 bytes). The stack was originally 16-byte
 	aligned above and we've since pushed a multiple of 16 bytes to the
 	stack since (pushed 0 bytes so far) and the alignment is thus
 	preserved and the call is well defined.

@@ -5,6 +5,7 @@
 
 //my stuff
 #include "extrafiles/tty.c"
+#include "extrafiles/idt.c"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -18,7 +19,9 @@
 
 void kernel_main(void) 
 {
-        /* Initialize terminal interface */
+    	//Initialize IDT
+    	idt_init();
+        // Initialize terminal interface
         terminal_initialize();
         //print some cool stuff
         kprintf("Hello there, %s! you are %c bold one. Also a number: %d\nNewlineTest", "General Kenobi", 'a', 111256);

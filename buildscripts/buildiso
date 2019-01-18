@@ -19,8 +19,6 @@ else
 fi
 
 #Build high level kernel (c++)
-#i686-elf-gcc -c src/kernel/kernel.c -o build/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-#i686-elf-g++ -c src/kernel/kernel.cpp -o build/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
 buildscripts/buildcfiles
 
 if [ $? -ne 0 ]; then

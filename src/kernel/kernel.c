@@ -19,10 +19,11 @@
 
 void kernel_main(void) 
 {
+	// Initialize terminal interface
+        terminal_initialize();
     	//Initialize IDT
     	idt_init();
-        // Initialize terminal interface
-        terminal_initialize();
-        //print some cool stuff
-        kprintf("Hello there, %s! you are %c bold one. Also a number: %d\nNewlineTest", "General Kenobi", 'a', 111256);
+	//keyboard init
+	outb(0x21 , 0xFD);
+	while(1);
 }

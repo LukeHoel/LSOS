@@ -12,6 +12,16 @@ static inline void outb(uint16_t port, uint8_t val)
 {
     asm volatile ( "outb %0, %1" : : "a"(val), "Nd"(port) );
 }
+
+static inline uint8_t inb(uint16_t port)
+{
+    uint8_t ret;
+    asm volatile ( "inb %1, %0"
+                   : "=a"(ret)
+                   : "Nd"(port) );
+    return ret;
+}
+
 void idt_init(void) {
         extern int load_idt();
         extern int irq0();
@@ -185,11 +195,24 @@ void idt_init(void) {
 
 }
 void irq0_handler(void) {
-          outb(0x20, 0x20); //EOI
+	
+	unsigned char status;
+	char keycode;
+	/* write EOI */
+	outb(0x20, 0x20);
+
+	status = inb(0x64);
+	/* Lowest bit of status will be set if buffer is not empty */
+	if (status & 0x01) {
+		keycode = inb(0x60);
+		if(keycode < 0)
+			return;
+		terminal_putchar('h');
+	}	
 }
 
 void irq1_handler(void) {
-	  outb(0x20, 0x20); //EOI
+    //outb(0x20, 0x20); //EOI
 }
 
 void irq2_handler(void) {

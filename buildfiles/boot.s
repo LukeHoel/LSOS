@@ -42,6 +42,7 @@ bootloader will jump to this position once the kernel has been loaded. It
 doesn't make sense to return from this function as the bootloader is gone.
 */
 .section .text
+
 /* start irq declarations */
 .global irq0
 .global irq1

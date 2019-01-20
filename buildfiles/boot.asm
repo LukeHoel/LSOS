@@ -16,7 +16,6 @@ dd MAGIC
 dd FLAGS
 dd CHECKSUM
 
-
 _start:
 	call kernel_main
 

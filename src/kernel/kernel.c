@@ -5,7 +5,7 @@
 
 //my stuff
 #include "extrafiles/tty.c"
-#include "extrafiles/idt.c"
+//#include "extrafiles/idt.c"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -22,8 +22,9 @@ void kernel_main(void)
 	// Initialize terminal interface
         terminal_initialize();
     	//Initialize IDT
-    	idt_init();
+	//idt_init();
 	//keyboard init
-	outb(0x21 , 0xFD);
+	//outb(0x21 , 0xFD);
+	kprintf("some %s once told me", "BODY");
 	while(1);
 }

@@ -6,10 +6,11 @@ NC='\033[0m' # No Color
 #Make build directory, if not present
 cd ..
 mkdir build
-mkdir -p build/isodir/boot/grub
 
 #Build Assembly bootstrapper
-nasm -f elf32 buildfiles/boot.s -o build/boot.o
+cd buildfiles
+nasm -f elf32 boot.asm -o ../build/boot.o
+cd ..
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Assembly bootstrapper OK${NC}"
@@ -26,7 +27,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #Build linker
-i686-elf-gcc -T buildfiles/linker.ld -o build/myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
+i686-elf-gcc -T buildfiles/link.ld -o myos.bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
 
 
 if [ $? -eq 0 ]; then
@@ -34,24 +35,4 @@ if [ $? -eq 0 ]; then
 else
     echo -e "${RED}Linker FAILED${NC}"
     exit 1
-fi
-
-#grub multiboot stuff
-cd build
-
-if grub-file --is-x86-multiboot myos.bin; then
-  echo -e "${GREEN}Multiboot confirmed${NC}"
-else
-  echo -e "${RED}The file is not multiboot${NC}"
-  exit 1
-fi
-
-#do some iso building, dropping iso in home directory
-cp myos.bin isodir/boot/myos.bin
-cp ../buildfiles/grub.cfg isodir/boot/grub/grub.cfg
-if [ -z "$ISODIR" ]
-then
-	grub-mkrescue -o ~/myos.iso isodir
-else	
-	grub-mkrescue -o $ISODIR/myos.iso isodir
 fi

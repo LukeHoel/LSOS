@@ -1,5 +1,3 @@
-global load_idt
-
 extern kernel_main
 extern _start
 

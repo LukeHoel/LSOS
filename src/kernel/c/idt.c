@@ -32,7 +32,6 @@ void idt_init(void)
 	IDT[0x21].zero = 0;
 	IDT[0x21].type_attr = 0x8e; /* INTERRUPT_GATE */
 	IDT[0x21].offset_higherbits = (keyboard_address & 0xffff0000) >> 16;
-	
 
 	/*     Ports
 	*	 PIC1	PIC2

@@ -8,61 +8,74 @@ size_t strlen(const char* str)
         return len;
 }
 
-size_t terminal_row;
-size_t terminal_column;
-uint8_t terminal_color;
-uint16_t* terminal_buffer;
+size_t terminalRow;
+size_t terminalColumn;
+uint8_t terminalColor;
+uint16_t* terminalBuffer;
  
-void terminal_initialize(void) 
+void terminalInitialize(void) 
 {
-        terminal_row = 0;
-        terminal_column = 0;
-        terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
-        terminal_buffer = (uint16_t*) 0xB8000;
+        terminalRow = 0;
+        terminalColumn = 0;
+        terminalColor = vgaEntryColor(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+        terminalBuffer = (uint16_t*) 0xB8000;
         for (size_t y = 0; y < VGA_HEIGHT; y++) {
                 for (size_t x = 0; x < VGA_WIDTH; x++) {
                         const size_t index = y * VGA_WIDTH + x;
-                        terminal_buffer[index] = vga_entry(' ', terminal_color);
+                        terminalBuffer[index] = vgaEntry(' ', terminalColor);
                 }
         }
 }
  
-void terminal_setcolor(uint8_t color) 
+void terminalSetColor(uint8_t color) 
 {
-        terminal_color = color;
+        terminalColor = color;
 }
- 
-void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) 
+
+size_t terminalIndex(size_t x, size_t y){
+	return y * VGA_WIDTH + x;
+}
+
+void terminalPutEntryAt(char c, uint8_t color, size_t x, size_t y) 
 {
-        const size_t index = y * VGA_WIDTH + x;
-        terminal_buffer[index] = vga_entry(c, color);
+        terminalBuffer[terminalIndex(x,y)] = vgaEntry(c, color);
 }
- 
-void terminal_putchar(char c) 
+
+void terminalPutChar(char c) 
 {
         if(c == '\n'){
-                terminal_row ++;
-                terminal_column = 0;
+	    	//newline
+	    	terminalRow ++;
+                terminalColumn = 0;
         }
-        else{
-                terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
-                if (++terminal_column == VGA_WIDTH) {
-                        terminal_column = 0;
-                        if (++terminal_row == VGA_HEIGHT)
-                                terminal_row = 0;
-                }
+	else if(c == '\b'){
+	    	//backspace
+		if(terminalColumn > 0){
+			terminalColumn --;
+		}
+
+		terminalPutEntryAt(' ', 0, terminalColumn, terminalRow);
+	}
+	else{
+                //allow last character in line to be delete
+	    	if(terminalColumn < VGA_WIDTH-1){
+	    		terminalPutEntryAt(c, terminalColor, terminalColumn, terminalRow);
+		}
+		if(terminalColumn < VGA_WIDTH){
+			terminalColumn ++;
+		}
         }
 }
  
-void terminal_write(const char* data, size_t size) 
+void terminalWrite(const char* data, size_t size) 
 {
         for (size_t i = 0; i < size; i++)
-                terminal_putchar(data[i]);
+                terminalPutChar(data[i]);
 }
  
-void terminal_writestring(const char* data) 
+void terminalWriteString(const char* data) 
 {
-        terminal_write(data, strlen(data));
+        terminalWrite(data, strlen(data));
 }
 
 void printInt(int in){
@@ -70,13 +83,11 @@ void printInt(int in){
         char digits[10] = "0123456789";
 
         while(in > 9){
-               terminal_putchar(digits[in % 10]);
+               terminalPutChar(digits[in % 10]);
                in /= 10;
         }
-        terminal_putchar(digits[in]);
+        terminalPutChar(digits[in]);
 }
-
-void kprintf(const char* data, ...);
 
 void kprintf(const char* data, ...){
        
@@ -85,7 +96,7 @@ void kprintf(const char* data, ...){
 
         for(size_t i = 0; i < strlen(data); i++){
                 if(data[i] != '%'){
-                        terminal_putchar(data[i]);        
+                        terminalPutChar(data[i]);        
                 }
                 else{
                         //go right ahead to next character
@@ -93,10 +104,10 @@ void kprintf(const char* data, ...){
                         //switch to parser for whatever data type this is
                         switch(data[i]){
                                 case('c'):
-                                        terminal_putchar(va_arg(arguments, int));
+                                        terminalPutChar(va_arg(arguments, int));
                                     break;
                                 case('s'):
-        				terminal_writestring(va_arg(arguments, const char*));                                       
+        				terminalWriteString(va_arg(arguments, const char*));                                       
                                     break;
                                 case('d'):
                                         printInt(va_arg(arguments, int));        

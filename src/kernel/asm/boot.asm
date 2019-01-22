@@ -1,4 +1,4 @@
-extern kernel_main
+extern kernelMain
 extern _start
 
 MODULEALIGN       equ     1<<0
@@ -15,7 +15,7 @@ dd FLAGS
 dd CHECKSUM
 
 _start:
-	call kernel_main
+	call kernelMain
 
 cli
 %include "idt.asm"

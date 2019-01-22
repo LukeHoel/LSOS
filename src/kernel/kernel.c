@@ -3,9 +3,10 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#include "c/tty.c"
+#include "c/tty/tty.c"
 #include "c/idt.c"
-#include "c/keyboard.c"
+#include "c/keyboard/keyboard.c"
+#include "c/inputReceiver.c"
 
 #if defined(__linux__)
 #error "You are not using a cross-compiler, you will most certainly run into trouble"

@@ -22,7 +22,7 @@ void keyboardHandlerMain(void) {
 		keycode = readPort(KEYBOARD_DATA_PORT);
 		if(keycode < 0)
 			return;
-		//do printing here
-		kprintf("%c",keymap[(int)keycode]);
+		//"raise" the char into an input handler
+		raiseInputChar(keymap[(int)keycode]);
 	}
 }

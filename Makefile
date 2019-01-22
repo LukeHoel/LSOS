@@ -12,6 +12,7 @@ all:  clean boot.o kernel.o link
 
 boot.o:
 	@nasm -f elf32 $(ASMDIR)/boot.asm -i $(ASMDIR) -o boot.o	
+
 kernel.o:
 	@i686-elf-gcc -c $(KERNELMAIN) $(CFLAGS) -o kernel.o
 

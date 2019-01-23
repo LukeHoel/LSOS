@@ -3,7 +3,10 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+#include "kernel.h"
+#include "c/utils.c"
 #include "c/tty/tty.c"
+#include "c/tty/terminal.c"
 #include "c/idt.c"
 #include "c/keyboard/keyboard.c"
 #include "c/inputReceiver.c"
@@ -18,7 +21,8 @@
 
 void kernelMain(void) 
 {
-    	terminalInitialize();
+    	ttyInit();
+	terminalInit();
 	idtInit();
 	kbInit();
 	while(1);

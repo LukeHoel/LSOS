@@ -1,4 +1,4 @@
-unsigned char keymap [] = {0, 27,
+unsigned char keymap[] = {0, 27,
  '1',
  '2',
  '3',

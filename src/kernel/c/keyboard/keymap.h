@@ -43,8 +43,7 @@ unsigned char keymap[] = {0, 27,
 	/* 39 */
  '\'',
  '`',
-  0,
-	/* Left shift */
+  0,/* Left shift */
  '\\',
  'z',
  'x',

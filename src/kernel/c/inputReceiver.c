@@ -1,4 +1,6 @@
 //choose what to do depending on system state
 void raiseInputChar(char input){
-    	terminalPutChar(input, INPUT_TYPE_USER);	
+    	if(input > 0){
+    		terminalPutChar(input, INPUT_TYPE_USER);	
+	}
 }

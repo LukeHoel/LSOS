@@ -1,16 +1,22 @@
 size_t terminalRow;
 size_t terminalColumn;
 
+#include "commandProcessor.c"
+
 void terminalInit(void){
 	terminalRow = 0;
 	terminalColumn = 0;
 }
 
-void terminalPutChar(char c){
+void terminalPutChar(char c, int type){
         if(c == '\n'){
 	    	//newline
 	    	terminalRow ++;
                 terminalColumn = 0;
+
+	    	if(type == INPUT_TYPE_USER){
+			processCommand(terminalRow - 1);
+		}
         }
 	else if(c == '\b'){
 	    	//backspace
@@ -30,10 +36,10 @@ void terminalPutChar(char c){
 		}
         }
 }
- 
+
 void terminalWrite(const char* data, size_t size) {
         for (size_t i = 0; i < size; i++)
-                terminalPutChar(data[i]);
+                terminalPutChar(data[i], INPUT_TYPE_INTERNAL);
 }
  
 void terminalWriteString(const char* data) 
@@ -45,20 +51,20 @@ void printInt(int in){
         char digits[10] = "0123456789";
 
         while(in > 9){
-               terminalPutChar(digits[in % 10]);
+               terminalPutChar(digits[in % 10], INPUT_TYPE_INTERNAL);
                in /= 10;
         }
-        terminalPutChar(digits[in]);
+        terminalPutChar(digits[in], INPUT_TYPE_INTERNAL);
 }
 
-void kprintf(const char* data, ...){
+void terminalPrintf(const char* data, ...){
        
         va_list arguments;
         va_start (arguments, data);
 
         for(size_t i = 0; i < strlen(data); i++){
                 if(data[i] != '%'){
-                        terminalPutChar(data[i]);        
+                        terminalPutChar(data[i], INPUT_TYPE_INTERNAL);        
                 }
                 else{
                         //go right ahead to next character
@@ -66,7 +72,7 @@ void kprintf(const char* data, ...){
                         //switch to parser for whatever data type this is
                         switch(data[i]){
                                 case('c'):
-                                        terminalPutChar(va_arg(arguments, int));
+                                        terminalPutChar(va_arg(arguments, int), INPUT_TYPE_INTERNAL);
                                     break;
                                 case('s'):
         				terminalWriteString(va_arg(arguments, const char*));                                       

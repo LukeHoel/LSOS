@@ -9,5 +9,7 @@ void raiseInputChar(char);
 void ttyInit(void);
 void ttyPutEntryAt(char c, uint8_t color, size_t x, size_t y);
 //terminal
+#define INPUT_TYPE_INTERNAL 0
+#define INPUT_TYPE_USER 1
 void terminalInit(void);
-void kprintf(const char*, ...);
+void terminalPrintf(const char*, ...);

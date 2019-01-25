@@ -1,5 +1,6 @@
 //utils
 size_t strlen(const char*);
+int strcmp(const char*, const char*);
 //idt
 void idtInit(void);
 void kbInit(void);

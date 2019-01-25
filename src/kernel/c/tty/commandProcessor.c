@@ -1,4 +1,4 @@
-#include "shell/commands.h"
+#include "shell/commands.c"
 
 void readLine(size_t rowNumber, char* lineContent){
 	
@@ -53,6 +53,6 @@ void processCommand(size_t rowNumber){
     	//send into parser
  	struct commandData data;
 	data.count = splitCommand(lineContent, data.words);
-	decodeCommand(data);	
+	executeCommand(data);	
 	
 }

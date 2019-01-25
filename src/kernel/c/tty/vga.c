@@ -28,5 +28,5 @@ static inline uint16_t vgaEntry(unsigned char uc, uint8_t color)
         return (uint16_t) uc | (uint16_t) color << 8;
 }
 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25; 
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25 

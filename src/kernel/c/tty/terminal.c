@@ -8,6 +8,10 @@ void terminalInit(void){
 	terminalColumn = 0;
 }
 
+void terminalPrintPrompt(){
+	terminalPrintf("%s", prompt);
+}
+
 void terminalPutChar(char c, int type){
         if(c == '\n'){
 	    	//newline
@@ -16,10 +20,14 @@ void terminalPutChar(char c, int type){
 
 	    	if(type == INPUT_TYPE_USER){
 			processCommand(terminalRow - 1);
+			terminalPrintPrompt();
 		}
         }
 	else if(c == '\b'){
 	    	//backspace
+	    	if(type == INPUT_TYPE_USER && terminalColumn <= promptLength){
+		    return;
+		}
 		if(terminalColumn > 0){
 			terminalColumn --;
 		}

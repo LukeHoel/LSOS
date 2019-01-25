@@ -5,8 +5,6 @@
 #define ENTER_KEY_CODE 0x1C
 
 extern void keyboardHandler(void);
-extern char readPort(unsigned short port);
-extern void writePort(unsigned short port, unsigned char data);
 extern void loadIdt(unsigned long *idtptr);
 
 struct IDTEntry{

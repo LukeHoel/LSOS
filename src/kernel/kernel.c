@@ -25,5 +25,6 @@ void kernelMain(void)
 	terminalInit();
 	idtInit();
 	kbInit();
+	terminalPrintPrompt();
 	while(1);
 }

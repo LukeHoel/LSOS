@@ -14,11 +14,25 @@ void terminalPrintPrompt(){
 	updateCursor((VGA_WIDTH*VGA_HEIGHT)*-1,terminalRow);
 }
 
+void terminalScroll(){
+	//shift the lines up by one
+    	for(int y = 0; y < VGA_HEIGHT; y ++){
+    		for(int x = 0; x < VGA_WIDTH; x ++){
+			ttyBuffer[ttyIndex(x,y)] = ttyBuffer[ttyIndex(x,y+1)];
+		}	
+	}
+}
+
 void terminalPutChar(char c, int type){
         if(c == '\n'){
 	    	//newline
-	    	terminalRow ++;
-                terminalColumn = 0;
+	    	if(terminalRow < VGA_HEIGHT-1){
+	    		terminalRow ++;
+		}else{
+			terminalScroll();
+		}
+                
+		terminalColumn = 0;
 
 	    	if(type == INPUT_TYPE_USER){
 			processCommand(terminalRow - 1);

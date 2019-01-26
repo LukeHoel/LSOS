@@ -24,7 +24,7 @@ size_t ttyIndex(size_t x, size_t y){
 	return y * VGA_WIDTH + x;
 }
 
-void update_cursor(int x, int y)
+void updateCursor(int x, int y)
 {
 	uint16_t pos = y * VGA_WIDTH + x;
  
@@ -37,5 +37,5 @@ void update_cursor(int x, int y)
 void ttyPutEntryAt(char c, uint8_t color, size_t x, size_t y) 
 {
         ttyBuffer[ttyIndex(x,y)] = vgaEntry(c, color);
-	update_cursor(x,y);	
+	updateCursor(x,y);
 }

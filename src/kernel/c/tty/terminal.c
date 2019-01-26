@@ -10,6 +10,8 @@ void terminalInit(void){
 
 void terminalPrintPrompt(){
 	terminalPrintf("%s", prompt);
+	//hide cursor offscreen
+	updateCursor((VGA_WIDTH*VGA_HEIGHT)*-1,terminalRow);
 }
 
 void terminalPutChar(char c, int type){

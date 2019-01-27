@@ -2,22 +2,40 @@ ASMDIR := src/kernel/asm
 KERNELMAIN := src/kernel/kernel.c
 LINKERFILE := src/kernel/link.ld
 
-OUTFILENAME := lsos.bin
+OSNAME := lsos
+OUTFILENAME := $(OSNAME).bin
+
+BOOTDIR := build/isodir/boot
 
 WARNINGS := -Wall
 
 CFLAGS := -std=gnu99 -ffreestanding $(WARNINGS)
 
-all:  clean boot.o kernel.o link
+#to build iso
+all:  clean buildfolder boot.o kernel.o link isodir iso
+#to build bin
+bin:  clean buildfolder boot.o kernel.o link 
+
+buildfolder:
+	@mkdir -p build
 
 boot.o:
-	@nasm -f elf32 $(ASMDIR)/boot.asm -i $(ASMDIR) -o boot.o	
+	@nasm -f elf32 $(ASMDIR)/boot.asm -i $(ASMDIR) -o build/boot.o	
 
 kernel.o:
-	@i686-elf-gcc -c $(KERNELMAIN) $(CFLAGS) -o kernel.o
+	@i686-elf-gcc -c $(KERNELMAIN) $(CFLAGS) -o build/kernel.o
 
 link:	
-	@i686-elf-gcc -T $(LINKERFILE) -o $(OUTFILENAME) -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
+	@i686-elf-gcc -T $(LINKERFILE) -o $(OUTFILENAME) -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
+
+isodir:
+	@mkdir -p $(BOOTDIR)/grub \
+	&& mv $(OSNAME).bin $(BOOTDIR) \
+	&& cp src/kernel/grub.cfg $(BOOTDIR)/grub/grub.cfg
+
+iso:
+	@grub-mkrescue -o $(OSNAME).iso build/isodir &> build/grubisobuild.log 
 
 clean:
-	@rm -f *.o 
+	@rm -f $(OSNAME).bin $(OSNAME).iso
+	@rm -r build 

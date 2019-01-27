@@ -7,6 +7,7 @@
 #include "c/utils.c"
 #include "c/tty/tty.c"
 #include "c/tty/terminal.c"
+#include "c/gdt.c"
 #include "c/idt.c"
 #include "c/keyboard/keyboard.c"
 #include "c/inputReceiver.c"
@@ -23,6 +24,7 @@ void kernelMain(void)
 {
     	ttyInit();
 	terminalInit();
+	gdt_install();
 	idtInit();
 	kbInit();
 	terminalPrintPrompt();

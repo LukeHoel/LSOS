@@ -18,4 +18,5 @@ _start:
 	call kernelMain
 
 cli
+%include "gdt.asm"
 %include "idt.asm"

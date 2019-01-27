@@ -1,6 +1,8 @@
 //utils
 size_t strlen(const char*);
 int strcmp(const char*, const char*);
+//gdt
+void gdt_install();
 //idt
 extern char readPort(unsigned short port);
 extern void writePort(unsigned short port, unsigned char data);

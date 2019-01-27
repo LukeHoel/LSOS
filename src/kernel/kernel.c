@@ -24,7 +24,7 @@ void kernelMain(void)
 {
     	ttyInit();
 	terminalInit();
-	gdt_install();
+	gdtInstall();
 	idtInit();
 	kbInit();
 	terminalPrintPrompt();

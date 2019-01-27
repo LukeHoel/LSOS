@@ -11,10 +11,10 @@ WARNINGS := -Wall
 
 CFLAGS := -std=gnu99 -ffreestanding $(WARNINGS)
 
-#to build iso
-all:  clean buildfolder boot.o kernel.o link isodir iso
-#to build bin
-bin:  clean buildfolder boot.o kernel.o link 
+#to build bin (for emulation use, much smaller file size)
+all:  clean buildfolder boot.o kernel.o link 
+#to build for grub (bootable on bare hardware) 
+grub:  clean buildfolder boot.o kernel.o link isodir iso
 
 buildfolder:
 	@mkdir -p build

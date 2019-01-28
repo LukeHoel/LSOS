@@ -9,7 +9,7 @@ void kbInit(void)
 	writePort(0x21 , 0xFD);
 }
 
-void keyboardHandlerMain(void) {
+void keyboardHandler(void) {
 	unsigned char status;
 	char keycode;
 

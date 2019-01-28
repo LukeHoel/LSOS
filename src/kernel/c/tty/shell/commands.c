@@ -16,7 +16,7 @@ void echo(struct commandData data){
 	terminalPrintf("\n");
 }
 
-#define amountCommands 1
+#define amountCommands 2
 struct command commands[amountCommands] = {
 	{"echo", &echo}
 };

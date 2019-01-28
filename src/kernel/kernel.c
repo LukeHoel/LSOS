@@ -9,7 +9,8 @@
 #include "c/tty/terminal.c"
 #include "c/gdt.c"
 #include "c/idt.c"
-#include "c/keyboard/keyboard.c"
+#include "c/interrupts/keyboard/keyboard.c"
+#include "c/interrupts/interruptMapper.c"
 #include "c/inputReceiver.c"
 
 #if defined(__linux__)
@@ -22,10 +23,10 @@
 
 void kernelMain(void) 
 {
+    	gdtInit();
+	idtInit();
     	ttyInit();
 	terminalInit();
-	gdtInstall();
-	idtInit();
 	kbInit();
 	terminalPrintPrompt();
 	while(1);

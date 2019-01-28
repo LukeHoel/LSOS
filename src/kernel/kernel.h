@@ -8,6 +8,8 @@ extern char readPort(unsigned short port);
 extern void writePort(unsigned short port, unsigned char data);
 void idtInit(void);
 void kbInit(void);
+//interrupts
+void mapInterrupts();
 //inputreceiver
 void raiseInputChar(char);
 //tty

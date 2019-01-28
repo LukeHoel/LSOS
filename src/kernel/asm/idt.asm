@@ -1,9 +1,9 @@
 global readPort
 global writePort
 global loadIdt
-global keyboardHandler
+global keyboardHandlerWrapper
  
-extern keyboardHandlerMain
+extern keyboardHandler
 
 readPort:
 	mov edx, [esp + 4]
@@ -22,8 +22,8 @@ loadIdt:
 	sti
 	ret
 
-keyboardHandler:                 
-	call    keyboardHandlerMain
+keyboardHandlerWrapper:                 
+	call    keyboardHandler
 	iretd
 
 section .bss

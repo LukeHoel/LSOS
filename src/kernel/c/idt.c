@@ -17,22 +17,13 @@ struct IDTEntry{
 
 struct IDTEntry IDT[IDT_SIZE];
 
-void setInterrupt(unsigned int index, unsigned long handlerAddress){
-
-	IDT[index].offsetLowerBits = handlerAddress & 0xffff;
-	IDT[index].selector = KERNEL_CODE_SEGMENT_OFFSET; /* KERNEL_CODE_SEGMENT_OFFSET */
-	IDT[index].zero = 0;
-	IDT[index].typeAttr = INTERRUPT_GATE; /* INTERRUPT_GATE */
-	IDT[index].offsetHigherBits = (handlerAddress & 0xffff0000) >> 16;
-}
-
 void idtInit(void)
 {
 	unsigned long idtAddress;
 	unsigned long idtPtr[2];
 
-	/* populate IDT entry of keyboard's interrupt */
-	setInterrupt(33,(unsigned long)keyboardHandler); 
+	//map interupts
+	mapInterrupts();
 
 	/*     Ports
 	*	 PIC1	PIC2

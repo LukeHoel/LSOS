@@ -38,4 +38,4 @@ iso:
 
 clean:
 	@rm -f $(OSNAME).bin $(OSNAME).iso
-	@rm -r build 
+	@rm -rf build 

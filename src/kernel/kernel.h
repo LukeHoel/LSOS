@@ -22,3 +22,6 @@ const char* prompt = ">";
 #define promptLength 1
 void terminalInit(void);
 void terminalPrintf(const char*, ...);
+//memory
+void *malloc(size_t);
+void free(void *ptr);

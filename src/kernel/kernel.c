@@ -38,9 +38,10 @@ void printPointer(char *ptr, size_t length){
 }
 
 void testMalloc(){
-	char *test = malloc(sizeof(char) * 100);
+	char *test = malloc(sizeof(char) * 10000);
 	char *test2 = malloc(sizeof(char) * 5);
-	char *test3 = malloc(sizeof(char) * 100);
+	char *test3 = malloc(sizeof(char) * 700);
+	char *test4 = malloc(sizeof(char) * 100);
 //	fillPointer(test, 'a', 100);	
 //	fillPointer(test2, 'b', 5);	
 //	fillPointer(test3, 'c', 100);	
@@ -48,10 +49,11 @@ void testMalloc(){
 //	printPointer(test, 100);	
 //	printPointer(test2, 5);	
 //	printPointer(test3, 100);	
-	test[0] = 'p';
-	terminalPrintf("%c", test[0]);
-	terminalPrintf("%d", (long)*test);
-	terminalPrintf("%d", (long)*test2);
+	terminalPrintf("\n");
+	terminalPrintf("%d\n", (long)test);
+	terminalPrintf("%d\n", (long)test2);
+	terminalPrintf("%d\n", (long)test3);
+	terminalPrintf("%d\n", (long)test4);
 }
 
 void kernelMain(void) 

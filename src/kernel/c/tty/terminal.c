@@ -71,16 +71,18 @@ void terminalWriteString(const char* data)
         terminalWrite(data, strlen(data));
 }
 
-//TODO make code less inefficent later?!?!
-void printInt(int in){
-        char digits[10] = "0123456789";
+#define DECIMAL 0
+#define HEX 1
+void printNumber(int in, int type){
+    	int base = type == 0 ? 10 : 16; 
+        char digits[16] = "0123456789abcdef";
 	int length = 1;
 	size_t position = terminalColumn;
 	
 	//first, get length of input number	
 	int temp = in;
-        while(temp > 9){
-               temp /= 10;
+        while(temp > base-1){
+               temp /= base;
 	       length++;
         }
 	
@@ -88,8 +90,8 @@ void printInt(int in){
 	//print out the reverse-in reverse, to get the right way around
 	int i;
 	for(i = 1; i <= length; i ++){
-		ttyBuffer[ttyIndex((position+length)-i, terminalRow)] = vgaEntry(digits[in % 10], 7);
-		in /= 10;
+		ttyBuffer[ttyIndex((position+length)-i, terminalRow)] = vgaEntry(digits[in % base], 7);
+		in /= base;
 		if(terminalColumn < VGA_WIDTH){
 			terminalColumn ++;
 			updateCursor(terminalColumn, terminalRow);
@@ -118,8 +120,12 @@ void terminalPrintf(const char* data, ...){
         				terminalWriteString(va_arg(arguments, const char*));                                       
                                     break;
                                 case('d'):
-                                        printInt(va_arg(arguments, int));        
+                                        printNumber(va_arg(arguments, int), DECIMAL);        
                                     break;
+				case('x'):
+                                        printNumber(va_arg(arguments, int), HEX);        
+                                    break;
+
                         }
 
                 }

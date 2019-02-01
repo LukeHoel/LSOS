@@ -88,7 +88,7 @@ void printInt(int in){
 	//print out the reverse-in reverse, to get the right way around
 	int i;
 	for(i = 1; i <= length; i ++){
-		ttyBuffer[(position+length)-i] = vgaEntry(digits[in % 10], 7);
+		ttyBuffer[ttyIndex((position+length)-i, terminalRow)] = vgaEntry(digits[in % 10], 7);
 		in /= 10;
 		if(terminalColumn < VGA_WIDTH){
 			terminalColumn ++;

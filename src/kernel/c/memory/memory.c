@@ -48,7 +48,7 @@ void* malloc(size_t size){
 	}while(!isValid);
 	
 	ptr = (void*) location;
-	terminalPrintf("allocating memory at %d, using %d blocks, freed status is %d\n", location, amountBlocks, ((struct header) *ptr).used);
+	//terminalPrintf("allocating memory at %d, using %d blocks, freed status is %d\n", location, amountBlocks, ((struct header) *ptr).used);
 	return setHeader(ptr, amountBlocks);	
 }
 

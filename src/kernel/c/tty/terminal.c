@@ -71,14 +71,30 @@ void terminalWriteString(const char* data)
         terminalWrite(data, strlen(data));
 }
 
+//TODO make code less inefficent later?!?!
 void printInt(int in){
         char digits[10] = "0123456789";
-
-        while(in > 9){
-               terminalPutChar(digits[in % 10], INPUT_TYPE_INTERNAL);
-               in /= 10;
+	int length = 1;
+	size_t position = terminalColumn;
+	
+	//first, get length of input number	
+	int temp = in;
+        while(temp > 9){
+               temp /= 10;
+	       length++;
         }
-        terminalPutChar(digits[in], INPUT_TYPE_INTERNAL);
+	
+	//printing out normally would give us a reversed version of what we want... not good enough
+	//print out the reverse-in reverse, to get the right way around
+	int i;
+	for(i = 1; i <= length; i ++){
+		ttyBuffer[(position+length)-i] = vgaEntry(digits[in % 10], 7);
+		in /= 10;
+		if(terminalColumn < VGA_WIDTH){
+			terminalColumn ++;
+			updateCursor(terminalColumn, terminalRow);
+		}
+	}
 }
 
 void terminalPrintf(const char* data, ...){

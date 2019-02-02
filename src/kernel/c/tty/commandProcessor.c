@@ -6,7 +6,6 @@ void readLine(size_t rowNumber, char* lineContent){
 	for(int i = VGA_WIDTH;i >= 0; i--){
 	    	//get current line
 	    	char current =  ttyBuffer[i + (VGA_WIDTH*rowNumber)];
-		//code can for sure be optimized eventually...
 	 	if(!foundEnd){
 			if(current == ' '){
 				lineContent[i] = 0;
@@ -38,7 +37,6 @@ int splitCommand(char* lineContent, char splitContent[VGA_WIDTH][VGA_WIDTH]){
 	    		splitContent[i][j ++] = lineContent[k];
 		}
 	}
-	
 
 	//add null terminator to end	
 	splitContent[i][j] = '\0';

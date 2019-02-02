@@ -1,11 +1,12 @@
-unsigned long startLocation = 	0x200000;
-unsigned long blockSize = 	0x000050;
+unsigned long startLocation 	= 0x200000;
+unsigned long blockSize 	= 0x000050;
 
 struct header{
 	size_t amountBlocks;
 	int used;
 };
 
+//TODO make this not force adding 1, instead rounding up division as double
 size_t blocksNeeded(size_t size){
     	size_t totalSize = (size+sizeof(struct header));
 	return (totalSize/blockSize)+1;

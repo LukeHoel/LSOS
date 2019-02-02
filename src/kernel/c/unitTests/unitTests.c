@@ -1,6 +1,6 @@
 void failTest(char *message){
     	if(DEBUGMODE > DEBUGNONE){
-		terminalPrintf("%s",message);
+		terminalPrintf("%s\n",message);
 	}
 }
 

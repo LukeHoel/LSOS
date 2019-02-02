@@ -52,7 +52,7 @@ void* malloc(size_t size){
 	
 	ptr = (void*) location;
 	
-	if(debugMode){
+	if(DEBUGMODE == DEBUGALL){
 	
 	double totalBlockSize = blockSize*amountBlocks;
 	double final = ((double)size)/totalBlockSize;
@@ -72,7 +72,7 @@ void free(void *ptr){
 	struct header *header = (void*) loc;
 	int amountBlocks = header->amountBlocks;
 	
-	if(debugMode){
+	if(DEBUGMODE == DEBUGALL){
 		terminalPrintf("\nFreeing memory at 0x%x, was using %d\n", (unsigned long)header, amountBlocks);	
 	}
 
@@ -81,26 +81,4 @@ void free(void *ptr){
 		header->used = 0;
 		header->amountBlocks = 1;
 	}
-}
-
-void testMalloc(){
-
-	terminalPrintf("\n");
-	malloc(sizeof(char) * 5);
-	char *test3 = malloc(sizeof(char) * 700);
-	malloc(sizeof(char) * 100);
-
-	terminalPrintf("\n");
-	free(test3);
-	terminalPrintf("\n");
-	malloc(sizeof(char) * 5);
-	char *test6 = malloc(sizeof(char) * 300);
-	malloc(sizeof(char) * 300);
-
-	terminalPrintf("\n");
-	free(test6);
-	terminalPrintf("\n");
-	malloc(sizeof(char) * 1200);
-	malloc(sizeof(char) * 5);
-	malloc(sizeof(char) * 5);
 }

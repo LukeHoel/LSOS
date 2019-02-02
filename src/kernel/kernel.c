@@ -13,7 +13,7 @@
 #include "c/interrupts/interruptMapper.c"
 #include "c/inputReceiver.c"
 #include "c/memory/memory.c"
-#include "c/unittests/unittests.c"
+#include "c/unitTests/unitTests.c"
 
 #if defined(__linux__)
 #error "You are not using a cross-compiler, you will most certainly run into trouble"

@@ -1,3 +1,4 @@
+#define debugMode 1
 //utils
 size_t strlen(const char*);
 int strcmp(const char*, const char*);

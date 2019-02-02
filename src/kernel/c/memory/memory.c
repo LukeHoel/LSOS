@@ -1,5 +1,5 @@
 unsigned long startLocation = 	0x200000;
-unsigned long blockSize = 	0x000100;
+unsigned long blockSize = 	0x000050;
 
 struct header{
 	size_t amountBlocks;
@@ -7,13 +7,16 @@ struct header{
 };
 
 size_t blocksNeeded(size_t size){
-	return (size/blockSize)+1;
+    	size_t totalSize = (size+sizeof(struct header));
+	return (totalSize/blockSize)+1;
 }
 
 void* setHeader(struct header *ptr, size_t amountBlocks){
 	ptr->amountBlocks = amountBlocks;
 	ptr->used = 1;
-	return (void*) (((unsigned long) ptr) + sizeof(struct header));
+
+	unsigned long loc = ((unsigned long) ptr) + sizeof(struct header);
+	return (void*) loc;
 }
 
 void* malloc(size_t size){
@@ -48,13 +51,30 @@ void* malloc(size_t size){
 	}while(!isValid);
 	
 	ptr = (void*) location;
-	//terminalPrintf("allocating memory at %d, using %d blocks, freed status is %d\n", location, amountBlocks, ((struct header) *ptr).used);
+	
+	if(debugMode){
+	
+	double totalBlockSize = blockSize*amountBlocks;
+	double final = ((double)size)/totalBlockSize;
+
+	terminalPrintf("Allocating memory at 0x%x, size is %d, using %d blocks. %d%% space wasted\n", location, size, amountBlocks, 100-(int)(final*100));
+	terminalPrintf("Total block size: %d, Total content size: %d\n\n", (int)totalBlockSize, size);
+
+	}
+
 	return setHeader(ptr, amountBlocks);	
 }
 
 void free(void *ptr){
-	struct header *header = (void*) (((unsigned long) ptr) - sizeof(struct header));
+    		
+	unsigned long loc = ((unsigned long) ptr) - sizeof(struct header);
+
+	struct header *header = (void*) loc;
 	int amountBlocks = header->amountBlocks;
+	
+	if(debugMode){
+		terminalPrintf("\nFreeing memory at 0x%x, was using %d\n", (unsigned long)header, amountBlocks);	
+	}
 
 	int i;
 	for(i = 0; i < amountBlocks; i ++){
@@ -64,22 +84,22 @@ void free(void *ptr){
 }
 
 void testMalloc(){
+
 	terminalPrintf("\n");
-
-	terminalPrintf("Block size is %d\n", blockSize);
-
-	terminalPrintf("Set up initial partions\n");
 	malloc(sizeof(char) * 5);
 	char *test3 = malloc(sizeof(char) * 700);
 	malloc(sizeof(char) * 100);
 
-	terminalPrintf("Free larger partition and\n");
+	terminalPrintf("\n");
 	free(test3);
+	terminalPrintf("\n");
 	malloc(sizeof(char) * 5);
 	char *test6 = malloc(sizeof(char) * 300);
 	malloc(sizeof(char) * 300);
-	terminalPrintf("Free middle\n");
+
+	terminalPrintf("\n");
 	free(test6);
+	terminalPrintf("\n");
 	malloc(sizeof(char) * 1200);
 	malloc(sizeof(char) * 5);
 	malloc(sizeof(char) * 5);

@@ -125,7 +125,9 @@ void terminalPrintf(const char* data, ...){
 				case('x'):
                                         printNumber(va_arg(arguments, int), HEX);        
                                     break;
-
+				default:
+                        		terminalPutChar(data[i], INPUT_TYPE_INTERNAL);        
+				    break;
                         }
 
                 }

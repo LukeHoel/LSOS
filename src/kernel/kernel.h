@@ -1,7 +1,13 @@
-#define DEBUGNONE 	0
-#define DEBUGERRORS 	1
-#define DEBUGALL 	2
-#define DEBUGMODE 	DEBUGERRORS
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdarg.h>
+
+#define DEBUGNONE 0
+#define DEBUGERRORS 1
+#define DEBUGALL 2
+#define DEBUGMODE DEBUGERRORS
+
 //utils
 size_t strlen(const char*);
 int strcmp(const char*, const char*);

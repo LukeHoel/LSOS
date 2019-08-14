@@ -2,7 +2,7 @@ ASMDIR := src/kernel/asm
 KERNELMAIN := src/kernel/kernel.c
 LINKERFILE := src/kernel/link.ld
 
-OSNAME := lsos
+OSNAME := simple
 OUTFILENAME := $(OSNAME).bin
 
 BOOTDIR := build/isodir/boot

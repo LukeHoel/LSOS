@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "tty.c": "cpp",
-        "inputreceiver.c": "cpp",
-        "unittests.c": "cpp",
-        "gdt.c": "cpp",
-        "idt.c": "cpp"
-    }
-}

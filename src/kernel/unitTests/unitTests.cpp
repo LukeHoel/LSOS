@@ -4,7 +4,7 @@ void failTest(char *message){
 	}
 }
 
-#include "memory.c"
+#include "memory.cpp"
 
 void runUnitTests(){
 	testMemory();

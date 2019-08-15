@@ -1,4 +1,4 @@
-#include "shell/commands.c"
+#include "shell/commands.cpp"
 
 void readLine(size_t rowNumber, char* lineContent){
 	

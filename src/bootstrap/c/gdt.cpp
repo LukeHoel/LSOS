@@ -23,7 +23,7 @@ struct gdtPtr gp;
 
 /* This will be a function in start.asm. We use this to properly
  *  reload the new segment registers */
-extern void gdtFlush();
+
 
 /* Setup a descriptor in the Global Descriptor Table */
 void gdtSetGate(int num, unsigned long base, unsigned long limit,

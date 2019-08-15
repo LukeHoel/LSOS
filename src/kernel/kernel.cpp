@@ -1,22 +1,22 @@
 #include "kernel.h"
 
-#include "../bootstrap/c/bootstrap.c"
+#include "../bootstrap/c/bootstrap.cpp"
 
-#include "utils.c"
+#include "utils.cpp"
 
-#include "tty/tty.c"
+#include "tty/tty.cpp"
 
-#include "tty/terminal.c"
+#include "tty/terminal.cpp"
 
-#include "interrupts/keyboard/keyboard.c"
+#include "interrupts/keyboard/keyboard.cpp"
 
-#include "interrupts/interruptMapper.c"
+#include "interrupts/interruptMapper.cpp"
 
-#include "inputReceiver.c"
+#include "inputReceiver.cpp"
 
-#include "memory/memory.c"
+#include "memory/memory.cpp"
 
-#include "unitTests/unitTests.c"
+#include "unitTests/unitTests.cpp"
 
 #if defined(__linux__)
 #error                                                                         \
@@ -27,7 +27,7 @@
 #error "This needs to be compiled with a ix86-elf compiler"
 #endif
 
-void kernelMain(void) {
+extern "C" void kernelMain(void) {
   bootstrap();
   ttyInit();
   terminalInit();

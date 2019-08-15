@@ -1,4 +1,4 @@
-#include "vga.c"
+#include "vga.cpp"
 
 uint8_t ttyColor;
 uint16_t* ttyBuffer;

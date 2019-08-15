@@ -1,5 +1,5 @@
 ASMDIR := src/bootstrap/asm
-KERNELMAIN := src/kernel/kernel.c
+KERNELMAIN := src/kernel/kernel.cpp
 LINKERFILE := src/bootstrap/link.ld
 
 OSNAME := simple-os
@@ -8,7 +8,7 @@ BOOTDIR := build/boot
 
 WARNINGS := -Wall
 
-CFLAGS := -std=gnu99 -ffreestanding $(WARNINGS)
+CFLAGS := -std=c++17 -ffreestanding -Wextra -fno-exceptions -fno-rtti
 
 # to build bin (for emulation use, much smaller file size)
 all:  clean buildfolder boot.o kernel.o link 
@@ -22,10 +22,10 @@ boot.o:
 	@nasm -f elf32 $(ASMDIR)/boot.asm -i $(ASMDIR) -o build/boot.o	
 
 kernel.o:
-	@i686-elf-gcc -c $(KERNELMAIN) $(CFLAGS) -o build/kernel.o
+	@i686-elf-g++ -c $(KERNELMAIN) $(CFLAGS) -o build/kernel.o
 
 link:	
-	@i686-elf-gcc -T $(LINKERFILE) -o $(OSNAME).bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
+	@i686-elf-g++ -T $(LINKERFILE) -o $(OSNAME).bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
 
 isodir:
 	@mkdir -p $(BOOTDIR)/grub \

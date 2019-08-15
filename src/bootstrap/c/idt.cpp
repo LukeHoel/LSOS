@@ -4,9 +4,6 @@
 
 #define ENTER_KEY_CODE 0x1C
 
-extern void keyboardHandler(void);
-extern void loadIdt(unsigned long *idtptr);
-
 struct IDTEntry {
   unsigned short int offsetLowerBits;
   unsigned short int selector;

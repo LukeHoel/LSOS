@@ -11,15 +11,19 @@
 //utils
 size_t strlen(const char*);
 int strcmp(const char*, const char*);
-//gdt
-void gdtInstall();
-//idt
-extern char readPort(unsigned short port);
-extern void writePort(unsigned short port, unsigned char data);
+// Externed asm functions
+extern "C" char readPort(unsigned short port);
+extern "C" void writePort(unsigned short port, unsigned char data);
+extern "C" void loadIdt(unsigned long *idtptr);
+extern "C" void keyboardHandler(void);
+extern "C" void keyboardHandlerWrapper();
+extern "C" void gdtFlush();
+
 void idtInit(void);
 void kbInit(void);
 //interrupts
 void mapInterrupts();
+
 //inputreceiver
 void raiseInputChar(char);
 //tty

@@ -7,13 +7,13 @@ const char *prompt = ">";
 
 #include "shell/shell.cpp"
 
-// currently functionality is stuck inside of the shell, needs to be moved
-// elsewhere
-void printf(const char *data, ...) {
-  va_list arguments;
-  va_start(arguments, data);
-  shell::terminalPrintf(data, arguments);
-}
+// // currently functionality is stuck inside of the shell, needs to be moved
+// // elsewhere
+// void printf(const char *data, ...) {
+//   va_list arguments;
+//   va_start(arguments, data);
+//   shell::terminalPrintf(data, arguments);
+// }
 
 void runProgram(const char *name) {
   if (name == "shell") {
@@ -21,9 +21,9 @@ void runProgram(const char *name) {
   }
 }
 
-// choose what to do depending on system state
-void putchar(char input) {
-  if (input > 0) {
-    shell::terminalPutChar(input, INPUT_TYPE_USER);
-  }
-}
+// // choose what to do depending on system state
+// void putchar(char input) {
+//   if (input > 0) {
+//     shell::terminalPutChar(input, INPUT_TYPE_USER);
+//   }
+// }

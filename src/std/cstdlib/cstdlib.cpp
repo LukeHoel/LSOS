@@ -1,10 +1,13 @@
+#include "cstdlib.h"
+namespace std {
 unsigned long startLocation = 0x200000;
 unsigned long blockSize = 0x000050;
 
-typedef struct header {
+class header {
+public:
   size_t amountBlocks;
   int used;
-} header;
+};
 
 // TODO make this not force adding 1, instead rounding up division as double
 size_t blocksNeeded(size_t size) {
@@ -53,18 +56,6 @@ void *malloc(size_t size) {
 
   ptr = (header *)location;
 
-  if (DEBUGMODE == DEBUGALL) {
-
-    double totalBlockSize = blockSize * amountBlocks;
-    double final = ((double)size) / totalBlockSize;
-
-    printf("[MALLOC]Allocating memory at 0x%x, size is %d, using %d "
-           "blocks. %d%% space wasted\n",
-           location, size, amountBlocks, 100 - (int)(final * 100));
-    printf("Total block size: %d, Total content size: %d\n",
-           (int)totalBlockSize, size);
-  }
-
   return setHeader(ptr, amountBlocks);
 }
 
@@ -75,14 +66,11 @@ void free(void *ptr) {
   header *head = (header *)loc;
   int amountBlocks = head->amountBlocks;
 
-  if (DEBUGMODE == DEBUGALL) {
-    printf("[FREE]Freeing memory at 0x%x, was using %d\n", (unsigned long)head,
-           amountBlocks);
-  }
-
   int i;
   for (i = 0; i < amountBlocks; i++) {
     head->used = 0;
     head->amountBlocks = 1;
   }
 }
+
+} // namespace std

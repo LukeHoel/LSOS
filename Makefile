@@ -10,10 +10,17 @@ WARNINGS := -Wall
 
 CFLAGS := -std=c++17 -ffreestanding -Wextra -fno-exceptions -fno-rtti
 
+# to replace with proper packaging later?
+STDLIBH := $(shell find src/std -name '*.h')
+STDLIBCPP := $(shell find src/std -name '*.cpp')
+
 # to build bin (for emulation use, much smaller file size)
-all:  clean buildfolder boot.o kernel.o link 
+all:  clean buildfolder buildstandardlibrary boot.o kernel.o link 
 # to build for grub (bootable on bare hardware) 
-grub:  clean buildfolder boot.o kernel.o link isodir iso
+grub:  clean buildfolder buildstandardlibrary boot.o kernel.o link isodir iso
+
+buildstandardlibrary:
+	@i686-elf-g++ $(STDLIBH) $(STDLIBCPP) $(CFLAGS) -o build/standardlibrary.o
 
 buildfolder:
 	@mkdir -p build
@@ -22,10 +29,10 @@ boot.o:
 	@nasm -f elf32 $(ASMDIR)/boot.asm -i $(ASMDIR) -o build/boot.o	
 
 kernel.o:
-	@i686-elf-g++ -c $(KERNELMAIN) $(CFLAGS) -o build/kernel.o
+	@i686-elf-g++ -c $(KERNELMAIN) $(CFLAGS) -I build/standardlibrary -o build/kernel.o
 
 link:	
-	@i686-elf-g++ -T $(LINKERFILE) -o $(OSNAME).bin -ffreestanding -O2 -nostdlib build/boot.o build/kernel.o -lgcc
+	@i686-elf-g++ -T $(LINKERFILE) -o $(OSNAME).bin -ffreestanding -O2 -nostdlib -I build/standardlibrary build/*.o -lgcc
 
 isodir:
 	@mkdir -p $(BOOTDIR)/grub \

@@ -1,5 +1,7 @@
 #include "kernel.h"
 
+#include <cstdlib.h>
+
 #include "../bootstrap/highlevel/boot.cpp"
 
 #include "utils.cpp"
@@ -11,8 +13,6 @@
 #include "interrupts/interruptMapper.cpp"
 
 #include "../programs/programs.cpp"
-
-#include "memory/memory.cpp"
 
 #include "unitTests/unitTests.cpp"
 

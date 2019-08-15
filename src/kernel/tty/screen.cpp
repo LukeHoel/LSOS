@@ -3,7 +3,7 @@
 uint8_t ttyColor;
 uint16_t* ttyBuffer;
 
-void ttyInit(void) 
+void clearScreen(void) 
 {
         ttyColor = vgaEntryColor(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
         ttyBuffer = (uint16_t*) 0xB8000;
@@ -15,12 +15,12 @@ void ttyInit(void)
         }
 }
  
-void ttySetColor(uint8_t color) 
+void setScreenColor(uint8_t color) 
 {
         ttyColor = color;
 }
 
-size_t ttyIndex(size_t x, size_t y){
+size_t screenIndex(size_t x, size_t y){
 	return y * VGA_WIDTH + x;
 }
 
@@ -34,8 +34,8 @@ void updateCursor(int x, int y)
 	writePort(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
 }
 
-void ttyPutEntryAt(char c, uint8_t color, size_t x, size_t y) 
+void setScreenEntry(char c, uint8_t color, size_t x, size_t y) 
 {
-        ttyBuffer[ttyIndex(x,y)] = vgaEntry(c, color);
+        ttyBuffer[screenIndex(x,y)] = vgaEntry(c, color);
 	updateCursor(x,y);
 }

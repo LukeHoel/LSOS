@@ -1,4 +1,4 @@
-ASMDIR := src/bootstrap/asm
+ASMDIR := src/bootstrap/lowlevel
 KERNELMAIN := src/kernel/kernel.cpp
 LINKERFILE := src/bootstrap/link.ld
 

@@ -1,18 +1,16 @@
 #include "kernel.h"
 
-#include "../bootstrap/c/bootstrap.cpp"
+#include "../bootstrap/highlevel/boot.cpp"
 
 #include "utils.cpp"
 
-#include "tty/tty.cpp"
-
-#include "tty/terminal.cpp"
+#include "tty/screen.cpp"
 
 #include "interrupts/keyboard/keyboard.cpp"
 
 #include "interrupts/interruptMapper.cpp"
 
-#include "inputReceiver.cpp"
+#include "../programs/programs.cpp"
 
 #include "memory/memory.cpp"
 
@@ -29,10 +27,10 @@
 
 extern "C" void kernelMain(void) {
   bootstrap();
-  ttyInit();
-  terminalInit();
-  kbInit();
-  terminalPrintPrompt();
+  clearScreen();
+  initKeyboard();
+  runProgram("shell");
+  // TODO make shell not own the printf so it can be used elsewhere
   runUnitTests(); // will print out if anything went wrong
   while (1) {
     // Loop forever, waiting for interrupts

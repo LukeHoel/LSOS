@@ -1,16 +1,18 @@
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdarg.h>
 
 #define DEBUGNONE 0
 #define DEBUGERRORS 1
 #define DEBUGALL 2
 #define DEBUGMODE DEBUGERRORS
 
-//utils
-size_t strlen(const char*);
-int strcmp(const char*, const char*);
+// utils
+size_t strlen(const char *);
+int strcmp(const char *, const char *);
+void printf(const char *data, ...);
+void putchar(char input);
 // Externed asm functions
 extern "C" char readPort(unsigned short port);
 extern "C" void writePort(unsigned short port, unsigned char data);
@@ -21,21 +23,12 @@ extern "C" void gdtFlush();
 
 void idtInit(void);
 void kbInit(void);
-//interrupts
+// interrupts
 void mapInterrupts();
 
-//inputreceiver
-void raiseInputChar(char);
-//tty
+// tty
 void ttyInit(void);
-void ttyPutEntryAt(char c, uint8_t color, size_t x, size_t y);
-//terminal
-#define INPUT_TYPE_INTERNAL 0
-#define INPUT_TYPE_USER 1
-const char* prompt = ">";
-#define promptLength 1
-void terminalInit(void);
-void terminalPrintf(const char*, ...);
-//memory
+void setScreenEntry(char c, uint8_t color, size_t x, size_t y);
+// memory
 void *malloc(size_t);
 void free(void *ptr);

@@ -58,11 +58,11 @@ void *malloc(size_t size) {
     double totalBlockSize = blockSize * amountBlocks;
     double final = ((double)size) / totalBlockSize;
 
-    terminalPrintf("[MALLOC]Allocating memory at 0x%x, size is %d, using %d "
-                   "blocks. %d%% space wasted\n",
-                   location, size, amountBlocks, 100 - (int)(final * 100));
-    terminalPrintf("Total block size: %d, Total content size: %d\n",
-                   (int)totalBlockSize, size);
+    printf("[MALLOC]Allocating memory at 0x%x, size is %d, using %d "
+           "blocks. %d%% space wasted\n",
+           location, size, amountBlocks, 100 - (int)(final * 100));
+    printf("Total block size: %d, Total content size: %d\n",
+           (int)totalBlockSize, size);
   }
 
   return setHeader(ptr, amountBlocks);
@@ -76,8 +76,8 @@ void free(void *ptr) {
   int amountBlocks = head->amountBlocks;
 
   if (DEBUGMODE == DEBUGALL) {
-    terminalPrintf("[FREE]Freeing memory at 0x%x, was using %d\n",
-                   (unsigned long)head, amountBlocks);
+    printf("[FREE]Freeing memory at 0x%x, was using %d\n", (unsigned long)head,
+           amountBlocks);
   }
 
   int i;

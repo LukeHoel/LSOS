@@ -1,12 +1,12 @@
-size_t terminalRow;
-size_t terminalColumn;
-
+// TODO remove later and replace with proper header files
+namespace shell {
+void terminalPrintf(const char *data, ...);
+}
 #include "commandProcessor.cpp"
 
-void terminalInit(void) {
-  terminalRow = 0;
-  terminalColumn = 0;
-}
+namespace shell {
+size_t terminalRow;
+size_t terminalColumn;
 
 void terminalPrintPrompt() {
   terminalPrintf("%s", prompt);
@@ -18,7 +18,7 @@ void terminalScroll() {
   // shift the lines up by one
   for (int y = 0; y < VGA_HEIGHT; y++) {
     for (int x = 0; x < VGA_WIDTH; x++) {
-      ttyBuffer[ttyIndex(x, y)] = ttyBuffer[ttyIndex(x, y + 1)];
+      ttyBuffer[screenIndex(x, y)] = ttyBuffer[screenIndex(x, y + 1)];
     }
   }
 }
@@ -47,11 +47,11 @@ void terminalPutChar(char c, int type) {
       terminalColumn--;
     }
 
-    ttyPutEntryAt(' ', 0, terminalColumn, terminalRow);
+    setScreenEntry(' ', 0, terminalColumn, terminalRow);
   } else {
     // allow last character in line to be delete
     if (terminalColumn < VGA_WIDTH - 1) {
-      ttyPutEntryAt(c, ttyColor, terminalColumn, terminalRow);
+      setScreenEntry(c, ttyColor, terminalColumn, terminalRow);
     }
     if (terminalColumn < VGA_WIDTH) {
       terminalColumn++;
@@ -89,7 +89,7 @@ void printNumber(int in, int type) {
   // around
   int i;
   for (i = 1; i <= length; i++) {
-    ttyBuffer[ttyIndex((position + length) - i, terminalRow)] =
+    ttyBuffer[screenIndex((position + length) - i, terminalRow)] =
         vgaEntry(digits[in % base], 7);
     in /= base;
     if (terminalColumn < VGA_WIDTH) {
@@ -133,3 +133,9 @@ void terminalPrintf(const char *data, ...) {
 
   va_end(arguments);
 }
+void main() {
+  terminalRow = 0;
+  terminalColumn = 0;
+  terminalPrintPrompt();
+}
+} // namespace shell

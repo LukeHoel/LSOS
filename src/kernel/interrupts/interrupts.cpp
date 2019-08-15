@@ -1,6 +1,6 @@
 void panic() {
   if (DEBUGMODE > DEBUGNONE) {
-    terminalPrintf("Double fault encountered. Hanging now...");
+    printf("Double fault encountered. Hanging now...");
   }
   while (1)
     ;

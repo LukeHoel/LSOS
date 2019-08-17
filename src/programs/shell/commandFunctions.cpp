@@ -2,9 +2,9 @@ namespace shell {
 void echo(commandData data) {
   // start at 1 because 0 is the command name
   for (int i = 1; i < data.count; i++) {
-    terminalPrintf("%s ", data.words[i]);
+    printf("%s ", data.words[i]);
   }
-  terminalPrintf("\n");
+  printf("\n");
 }
 
 // induce an exception

@@ -1,15 +1,16 @@
-// TODO remove later and replace with proper header files
-namespace shell {
-void terminalPrintf(const char *data, ...);
-}
+#include "shell.h"
+
 #include "commandProcessor.cpp"
+#include <cstdlib.h>
+
+using namespace std;
 
 namespace shell {
 size_t terminalRow;
 size_t terminalColumn;
 
 void terminalPrintPrompt() {
-  terminalPrintf("%s", prompt);
+  printf("%s", prompt);
   // hide cursor offscreen
   updateCursor((VGA_WIDTH * VGA_HEIGHT) * -1, terminalRow);
 }
@@ -23,7 +24,7 @@ void terminalScroll() {
   }
 }
 
-void terminalPutChar(char c, int type) {
+void terminalPutChar(char c, bool internal) {
   if (c == '\n') {
     // newline
     if (terminalRow < VGA_HEIGHT - 1) {
@@ -34,13 +35,13 @@ void terminalPutChar(char c, int type) {
 
     terminalColumn = 0;
 
-    if (type == INPUT_TYPE_USER) {
+    if (!internal) {
       processCommand(terminalRow - 1);
       terminalPrintPrompt();
     }
   } else if (c == '\b') {
     // backspace
-    if (type == INPUT_TYPE_USER && terminalColumn <= promptLength) {
+    if (!internal && terminalColumn <= promptLength) {
       return;
     }
     if (terminalColumn > 0) {
@@ -59,16 +60,12 @@ void terminalPutChar(char c, int type) {
   }
 }
 
-void terminalWrite(const char *data, size_t size) {
-  for (size_t i = 0; i < size; i++)
-    terminalPutChar(data[i], INPUT_TYPE_INTERNAL);
+void terminalPutS(const char *input) {
+  for (size_t i; i < strlen(input); i++) {
+    terminalPutChar(input[i], true);
+  }
 }
 
-void terminalWriteString(const char *data) {
-  terminalWrite(data, strlen(data));
-}
-
-void terminalPrintf() {}
 void main() {
   terminalRow = 0;
   terminalColumn = 0;

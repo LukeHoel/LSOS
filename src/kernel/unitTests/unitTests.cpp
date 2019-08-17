@@ -1,4 +1,4 @@
-void failTest(char *message) {
+void failTest(const char *message) {
   if (DEBUGMODE > DEBUGNONE) {
     printf("%s\n", message);
   }

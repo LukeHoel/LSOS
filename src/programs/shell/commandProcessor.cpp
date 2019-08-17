@@ -26,7 +26,7 @@ int splitCommand(char *lineContent, char splitContent[VGA_WIDTH][VGA_WIDTH]) {
 
   int i = 0;
   int j = 0;
-  for (int k = promptLength; k < strlen(lineContent); k++) {
+  for (size_t k = promptLength; k < strlen(lineContent); k++) {
 
     if (lineContent[k] == ' ') {
       // end string with null terminator

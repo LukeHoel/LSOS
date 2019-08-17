@@ -1,4 +1,3 @@
-#include <cstdio.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -11,9 +10,6 @@ using namespace std;
 #define DEBUGALL 2
 #define DEBUGMODE DEBUGERRORS
 
-// utils
-size_t strlen(const char *);
-int strcmp(const char *, const char *);
 // Externed asm functions
 extern "C" char readPort(unsigned short port);
 extern "C" void writePort(unsigned short port, unsigned char data);

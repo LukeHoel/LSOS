@@ -1,20 +1,14 @@
 #include "kernel.h"
 
-#include <cstdlib.h>
-
+// clang-format off
 #include "../bootstrap/highlevel/boot.cpp"
-
 #include "utils.cpp"
-
-#include "tty/screen.cpp"
-
+#include "screen/screen.cpp"
 #include "interrupts/keyboard/keyboard.cpp"
-
 #include "interrupts/interruptMapper.cpp"
-
-#include "../programs/programs.cpp"
-
+#include "../programs/programManager.cpp"
 #include "unitTests/unitTests.cpp"
+// clang-format on
 
 #if defined(__linux__)
 #error                                                                         \
@@ -30,7 +24,6 @@ extern "C" void kernelMain(void) {
   clearScreen();
   initKeyboard();
   runProgram("shell");
-  // TODO make shell not own the printf so it can be used elsewhere
   runUnitTests(); // will print out if anything went wrong
   while (1) {
     // Loop forever, waiting for interrupts

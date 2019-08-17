@@ -1,4 +1,4 @@
-#include "cstdlib.h"
+#include "../cstdlib.h"
 namespace std {
 unsigned long startLocation = 0x200000;
 unsigned long blockSize = 0x000050;
@@ -32,7 +32,7 @@ void *malloc(size_t size) {
 
   do {
     ptr = (header *)location;
-    int i;
+    size_t i;
     int invalidated = 0;
     size_t foundHeaderSize;
 

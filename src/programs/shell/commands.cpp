@@ -6,16 +6,17 @@ public:
 };
 
 struct command {
-  char *name;
+  const char *name;
   void (*function)(commandData);
 };
 
 void echo(commandData data) {
   // start at 1 because 0 is the command name
-  for (int i = 1; i < data.count; i++) {
-    terminalPrintf("%s ", data.words[i]);
+  for (size_t i = 0; i < data.count; i++) {
+    sprintf(utilityWidthBuffer, "%s ", data.words[i]);
   }
-  terminalPrintf("\n");
+  terminalPutS(utilityWidthBuffer);
+  terminalPutChar('\n', true);
 }
 
 #define amountCommands 2
@@ -30,6 +31,6 @@ void executeCommand(commandData data) {
     }
   }
   // if it gets here, it couldn't find anything
-  terminalPrintf("Command \'%s\' not found\n", data.words[0]);
+  terminalPutS("Command not found");
 }
 } // namespace shell

@@ -20,7 +20,9 @@ all:  clean buildfolder buildstandardlibrary boot.o kernel.o link
 grub:  clean buildfolder buildstandardlibrary boot.o kernel.o link isodir iso
 
 buildstandardlibrary:
-	@i686-elf-g++ $(STDLIBH) $(STDLIBCPP) $(CFLAGS) -o build/standardlibrary.o
+	@mkdir build/standardlibrary \
+	&& i686-elf-g++ $(CFLAGS) -nostdlib -c $(STDLIBCPP) \
+	&& mv *.o build/standardlibrary
 
 buildfolder:
 	@mkdir -p build
@@ -29,10 +31,10 @@ boot.o:
 	@nasm -f elf32 $(ASMDIR)/boot.asm -i $(ASMDIR) -o build/boot.o	
 
 kernel.o:
-	@i686-elf-g++ -c $(KERNELMAIN) $(CFLAGS) -I build/standardlibrary -o build/kernel.o
+	@i686-elf-g++ -c $(KERNELMAIN) $(CFLAGS) -I src/std -o build/kernel.o
 
 link:	
-	@i686-elf-g++ -T $(LINKERFILE) -o $(OSNAME).bin -ffreestanding -O2 -nostdlib -I build/standardlibrary build/*.o -lgcc
+	@i686-elf-g++ -T $(LINKERFILE) -o $(OSNAME).bin -ffreestanding -O2 -nostdlib build/standardlibrary/* build/boot.o build/kernel.o -lgcc
 
 isodir:
 	@mkdir -p $(BOOTDIR)/grub \

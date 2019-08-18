@@ -28,3 +28,5 @@ void mapInterrupts();
 // tty
 void ttyInit(void);
 void setScreenEntry(char c, uint8_t color, size_t x, size_t y);
+// Program manager
+void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode);

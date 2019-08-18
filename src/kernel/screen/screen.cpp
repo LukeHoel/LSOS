@@ -31,3 +31,8 @@ void setScreenEntry(char c, uint8_t color, size_t x, size_t y) {
   ttyBuffer[screenIndex(x, y)] = vgaEntry(c, color);
   updateCursor(x, y);
 }
+void setScreenEntry(char c, enum vgaColor fg, enum vgaColor bg, size_t x,
+                    size_t y) {
+  ttyBuffer[screenIndex(x, y)] = vgaEntry(c, fg, bg);
+  updateCursor(x, y);
+}

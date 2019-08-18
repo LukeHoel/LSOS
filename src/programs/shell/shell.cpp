@@ -10,9 +10,11 @@ size_t terminalRow;
 size_t terminalColumn;
 
 void terminalPrintPrompt() {
-  printf("%s", prompt);
-  // hide cursor offscreen
-  updateCursor((VGA_WIDTH * VGA_HEIGHT) * -1, terminalRow);
+  if (currentProgram == _shell) {
+    printf("%s", prompt);
+    // hide cursor offscreen
+    updateCursor((VGA_WIDTH * VGA_HEIGHT) * -1, terminalRow);
+  }
 }
 
 void terminalScroll() {
@@ -71,6 +73,7 @@ void clearUtilityWidthBuffer() {
   }
 }
 void main() {
+  clearScreen();
   clearUtilityWidthBuffer();
   terminalRow = 0;
   terminalColumn = 0;

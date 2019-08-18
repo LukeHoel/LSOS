@@ -26,8 +26,11 @@ void echo(commandData data) {
   terminalPutChar('\n', true);
 }
 
-#define amountCommands 2
-struct command commands[amountCommands] = {{"info", &info}, {"echo", &echo}};
+#define amountCommands 3
+struct command commands[amountCommands] = {
+    {"info", &info}, {"echo", &echo}, {"editor", [](commandData data) {
+                                         runProgram("editor");
+                                       }}};
 
 void executeCommand(commandData data) {
   for (int i = 0; i < amountCommands; i++) {

@@ -1,23 +1,25 @@
 
 
+#include "programManager.h"
+
+#include "editor/editor.cpp"
 #include "shell/shell.cpp"
-
-enum Programs { _shell = 1 };
-
-int currentProgram = 0;
 
 void runProgram(const char *name) {
   if (name == "shell") {
     currentProgram = _shell;
     shell::main();
+  } else if (name == "editor") {
+    currentProgram = _editor;
+    editor::main();
   }
 }
 
-void sendPutCharToProgram(char input) {
-  switch (currentProgram) {
-
-  case (_shell):
-    shell::terminalPutChar(input);
-    break;
+void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode) {
+  if (currentProgram == _shell) {
+    shell::terminalPutChar(mappedKeyCode);
+  } else if (currentProgram == _editor) {
+    editor::receiveKeyPress(keyCode, mappedKeyCode);
   }
 }
+void sendPutCharToProgram(char input) { shell::terminalPutChar(input); }

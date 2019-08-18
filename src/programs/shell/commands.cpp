@@ -10,17 +10,24 @@ struct command {
   void (*function)(commandData);
 };
 
+void info(commandData data) {
+  terminalPutS("Simple OS ");
+  terminalPutS("Version ");
+  terminalPutS(VERSION);
+  terminalPutS("\n");
+}
+
 void echo(commandData data) {
   // start at 1 because 0 is the command name
-  for (size_t i = 0; i < data.count; i++) {
-    sprintf(utilityWidthBuffer, "%s ", data.words[i]);
+  for (size_t i = 1; i < data.count; i++) {
+    terminalPutS(data.words[i]);
+    terminalPutS(" ");
   }
-  terminalPutS(utilityWidthBuffer);
   terminalPutChar('\n', true);
 }
 
 #define amountCommands 2
-struct command commands[amountCommands] = {{"echo", &echo}};
+struct command commands[amountCommands] = {{"info", &info}, {"echo", &echo}};
 
 void executeCommand(commandData data) {
   for (int i = 0; i < amountCommands; i++) {
@@ -31,6 +38,6 @@ void executeCommand(commandData data) {
     }
   }
   // if it gets here, it couldn't find anything
-  terminalPutS("Command not found");
+  terminalPutS("Command not found\n");
 }
 } // namespace shell

@@ -61,14 +61,20 @@ void terminalPutChar(char c, bool internal) {
 }
 
 void terminalPutS(const char *input) {
-  for (size_t i; i < strlen(input); i++) {
+  for (size_t i = 0; i < strlen(input); i++) {
     terminalPutChar(input[i], true);
   }
 }
-
+void clearUtilityWidthBuffer() {
+  for (size_t i = 0; i < VGA_WIDTH; i++) {
+    utilityWidthBuffer[i] = ' ';
+  }
+}
 void main() {
+  clearUtilityWidthBuffer();
   terminalRow = 0;
   terminalColumn = 0;
+  info({});
   terminalPrintPrompt();
 }
 } // namespace shell

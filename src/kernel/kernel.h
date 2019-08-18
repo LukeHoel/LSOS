@@ -10,6 +10,8 @@ using namespace std;
 #define DEBUGALL 2
 #define DEBUGMODE DEBUGERRORS
 
+const char *VERSION = "0.0.1";
+
 // Externed asm functions
 extern "C" char readPort(unsigned short port);
 extern "C" void writePort(unsigned short port, unsigned char data);

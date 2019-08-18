@@ -1,25 +1,19 @@
 
 
 #include "programManager.h"
+#include "program/program.cpp"
 
-#include "editor/editor.cpp"
-#include "shell/shell.cpp"
+programs::Program *currentProgram;
 
-void runProgram(const char *name) {
-  if (name == "shell") {
-    currentProgram = _shell;
-    shell::main();
-  } else if (name == "editor") {
-    currentProgram = _editor;
-    editor::main();
-  }
-}
+#include "terminal/terminal.cpp"
+
+namespace programs {
+
+Terminal terminal;
+
+void runProgram(const char *name) { terminal = Terminal(); }
 
 void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode) {
-  if (currentProgram == _shell) {
-    shell::terminalPutChar(mappedKeyCode);
-  } else if (currentProgram == _editor) {
-    editor::receiveKeyPress(keyCode, mappedKeyCode);
-  }
+  terminal.receiveKeyPress(keyCode, mappedKeyCode);
 }
-void sendPutCharToProgram(char input) { shell::terminalPutChar(input); }
+} // namespace programs

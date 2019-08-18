@@ -1,7 +1,6 @@
 #include "keymap.h"
 
 #include <cstdio.h>
-using namespace std;
 
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
@@ -25,6 +24,6 @@ void keyboardHandler(void) {
     if (keycode < 0)
       return;
     //"raise" the char into an input handler
-    sendKeypressToActiveProgram((int)keycode, keymap[(int)keycode]);
+    programs::sendKeypressToActiveProgram((int)keycode, keymap[(int)keycode]);
   }
 }

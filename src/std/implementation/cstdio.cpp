@@ -1,5 +1,7 @@
 #include "../cstdio.h"
-void sendPutCharToProgram(char input);
+namespace programs {
+void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode);
+}
 namespace std {
 // Don't use outside of here, it keeps one char* for all conversions
 const int maxLength = 13;
@@ -62,7 +64,7 @@ void printf(const char *data, ...) {
 
   va_end(arguments);
 }
-void putchar(char input) { sendPutCharToProgram(input); }
+void putchar(char input) { programs::sendKeypressToActiveProgram(-1, input); }
 void puts(char *input) {
   for (size_t i; i < strlen(input); i++) {
     putchar(input[i]);

@@ -3,8 +3,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-using namespace std;
-
 #define DEBUGNONE 0
 #define DEBUGERRORS 1
 #define DEBUGALL 2

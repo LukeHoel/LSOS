@@ -1,12 +1,14 @@
 #include "kernel.h"
 
+using namespace std;
+
 // clang-format off
 #include "../bootstrap/highlevel/boot.cpp"
 #include "utils.cpp"
 #include "screen/screen.cpp"
+#include "../programs/programManager.cpp"
 #include "interrupts/keyboard/keyboard.cpp"
 #include "interrupts/interruptMapper.cpp"
-#include "../programs/programManager.cpp"
 #include "unitTests/unitTests.cpp"
 // clang-format on
 
@@ -23,7 +25,7 @@ extern "C" void kernelMain(void) {
   bootstrap();
   clearScreen();
   initKeyboard();
-  runProgram("shell");
+  programs::runProgram("shell");
   runUnitTests(); // will print out if anything went wrong
   while (1) {
     // Loop forever, waiting for interrupts

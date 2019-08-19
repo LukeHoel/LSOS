@@ -1,8 +1,9 @@
 #include "../string.h"
 namespace std {
 void string::setToCString(const char *input) {
-  innerCString = new char[strlen(input)];
+  innerCString = new char[strlen(input) + 1];
   strncpy(innerCString, input, strlen(input));
+  innerCString[strlen(input)] = '\0';
 }
 bool string::isSame(const char *input) {
   return strcmp(innerCString, input) == 0;
@@ -15,7 +16,9 @@ string::string(const string &str, size_t pos, size_t len) {
   strncpy(innerCString, str.c_str() + pos, len);
 }
 string::string(const char *s) { setToCString(s); }
-string::string(const char *s, size_t n) {}
+string::string(const char *s, size_t n) {
+  // not implemented
+}
 string::string(size_t n, char c) {
   innerCString = new char[n];
   for (size_t i = 0; i < n; i++) {

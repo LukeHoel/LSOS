@@ -1,5 +1,5 @@
-#ifndef STD_CSTDIO
-#define STD_CSTDIO
+#ifndef CSTDIO_H
+#define CSTDIO_H
 #include "common.h"
 #include "cstring.h"
 

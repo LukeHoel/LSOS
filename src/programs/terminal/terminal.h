@@ -1,5 +1,6 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
+#include <string.h>
 using namespace std;
 namespace programs {
 const char *prompt = ">";
@@ -15,7 +16,7 @@ struct command {
   void (*function)(commandData);
 };
 
-class Terminal : public Program {
+class Terminal : Program {
 public:
   Terminal();
   // Overridden base class stuff

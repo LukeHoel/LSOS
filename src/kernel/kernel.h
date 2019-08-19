@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+// default std stuff
+#include <new.h>
 
 #define DEBUGNONE 0
 #define DEBUGERRORS 1

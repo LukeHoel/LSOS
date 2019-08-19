@@ -27,4 +27,14 @@ int strcmp(const char *str1, const char *str2) {
 
   return 0;
 }
+char *strncpy(char *destination, const char *source, size_t num) {
+  bool foundEndOfSource = false;
+  for (size_t i = 0; i < num; i++) {
+    if (source[i] == '\0') {
+      foundEndOfSource = true;
+    }
+    destination[i] = foundEndOfSource ? '\0' : source[i];
+  }
+  return destination;
+}
 } // namespace std

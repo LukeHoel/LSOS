@@ -4,6 +4,7 @@ using namespace std;
 
 // clang-format off
 #include "../bootstrap/highlevel/boot.cpp"
+#include "../bootstrap/highlevel/icxxabi.cpp"
 #include "utils.cpp"
 #include "screen/screen.cpp"
 #include "../programs/programManager.cpp"
@@ -25,7 +26,7 @@ extern "C" void kernelMain(void) {
   bootstrap();
   clearScreen();
   initKeyboard();
-  programs::runProgram("shell");
+  programs::runProgram("terminal");
   runUnitTests(); // will print out if anything went wrong
   while (1) {
     // Loop forever, waiting for interrupts

@@ -55,6 +55,7 @@ void *malloc(size_t size) {
   } while (!isValid);
 
   ptr = (header *)location;
+  // printf("Allocating at %d\n", location);
 
   return setHeader(ptr, amountBlocks);
 }
@@ -62,7 +63,7 @@ void *malloc(size_t size) {
 void free(void *ptr) {
 
   unsigned long loc = ((unsigned long)ptr) - sizeof(header);
-
+  // printf("Freeing at %d\n", loc);
   header *head = (header *)loc;
   int amountBlocks = head->amountBlocks;
 

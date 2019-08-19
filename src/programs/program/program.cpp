@@ -18,5 +18,5 @@ void Program::drawTitle(const char *programName) {
   }
 }
 void Program::main() {}
-void Program::exit() { runProgram("shell"); }
+void Program::exit() { runProgram("terminal"); }
 } // namespace programs

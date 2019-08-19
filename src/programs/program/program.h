@@ -1,5 +1,5 @@
-#ifndef EDITOR_H
-#define EDITOR_H
+#ifndef PROGRAM_H
+#define PROGRAM_H
 #include "cstdio.h"
 using namespace std;
 namespace programs {

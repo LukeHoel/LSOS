@@ -13,7 +13,18 @@ void Terminal::terminalPrintPrompt() {
   // hide cursor offscreen
   updateCursor((VGA_WIDTH * VGA_HEIGHT) * -1, terminalRow);
 }
-
+void Terminal::main() {
+  clearUtilityWidthBuffer();
+  terminalRow = 1;
+  terminalColumn = 0;
+  info();
+  terminalPrintPrompt();
+}
+void Terminal::clearUtilityWidthBuffer() {
+  for (size_t i = 0; i < VGA_WIDTH; i++) {
+    utilityWidthBuffer[i] = ' ';
+  }
+}
 void Terminal::terminalScroll() {
   // shift the lines up by one
   for (int y = 1; y < VGA_HEIGHT; y++) {
@@ -64,18 +75,7 @@ void Terminal::terminalPutS(const char *input) {
     terminalPutChar(input[i], true);
   }
 }
-void Terminal::clearUtilityWidthBuffer() {
-  for (size_t i = 0; i < VGA_WIDTH; i++) {
-    utilityWidthBuffer[i] = ' ';
-  }
-}
-void Terminal::main() {
-  clearUtilityWidthBuffer();
-  terminalRow = 1;
-  terminalColumn = 0;
-  info();
-  terminalPrintPrompt();
-}
+
 void readLine(size_t rowNumber, char *lineContent) {
 
   int foundEnd = 0;
@@ -133,6 +133,8 @@ void Terminal::executeCommand(commandData data) {
     info();
   } else if (strcmp(commandName, "echo") == 0) {
     echo(data);
+  } else if (strcmp(commandName, "editor") == 0) {
+    runProgram("editor");
   } else {
     terminalPutS("Command not found\n");
   }

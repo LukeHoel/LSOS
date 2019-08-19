@@ -1,19 +1,37 @@
 
 
 #include "programManager.h"
+
 #include "program/program.cpp"
 
-programs::Program *currentProgram;
-
+#include "editor/editor.cpp"
 #include "terminal/terminal.cpp"
 
 namespace programs {
 
-Terminal terminal;
+string currentProgram;
 
-void runProgram(const char *name) { terminal = Terminal(); }
+Terminal terminal;
+Editor editor("editor");
+
+void runProgram(string name) {
+
+  currentProgram = name;
+
+  if (currentProgram == "terminal") {
+    terminal = Terminal();
+  } else {
+    currentProgram = "editor";
+    editor = Editor(name);
+  }
+}
 
 void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode) {
-  terminal.receiveKeyPress(keyCode, mappedKeyCode);
+  if (currentProgram == "terminal") {
+    terminal.receiveKeyPress(keyCode, mappedKeyCode);
+
+  } else {
+    editor.receiveKeyPress(keyCode, mappedKeyCode);
+  }
 }
 } // namespace programs

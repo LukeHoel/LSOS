@@ -1,6 +1,6 @@
 #include "../cstdio.h"
 namespace programs {
-void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode);
+void sendKeypressToActiveProgram(int keyCode, unsigned char mappedKeyCode);
 }
 namespace std {
 // Don't use outside of here, it keeps one char* for all conversions

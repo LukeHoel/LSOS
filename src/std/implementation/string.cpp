@@ -17,7 +17,8 @@ string::string(const string &str, size_t pos, size_t len) {
 }
 string::string(const char *s) { setToCString(s); }
 string::string(const char *s, size_t n) {
-  // not implemented
+  innerCString = new char[n + 1];
+  strncpy(innerCString, s, n);
 }
 string::string(size_t n, char c) {
   innerCString = new char[n];

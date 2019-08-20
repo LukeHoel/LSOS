@@ -29,4 +29,9 @@ void mapInterrupts();
 void ttyInit(void);
 void setScreenEntry(char c, uint8_t color, size_t x, size_t y);
 // Program manager
-void sendKeypressToActiveProgram(int keyCode, char mappedKeyCode);
+void sendKeypressToActiveProgram(int keyCode, unsigned char mappedKeyCode);
+// special keys
+const int leftKey = 255;
+const int rightKey = 254;
+const int upKey = 253;
+const int downKey = 252;

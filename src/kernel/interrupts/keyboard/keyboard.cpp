@@ -24,6 +24,6 @@ void keyboardHandler(void) {
     if (keycode < 0)
       return;
     //"raise" the char into an input handler
-    programs::sendKeypressToActiveProgram((int)keycode, keymap[(int)keycode]);
+    programs::sendKeypressToActiveProgram(keycode, keymap[(int)keycode]);
   }
 }

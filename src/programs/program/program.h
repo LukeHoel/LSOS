@@ -11,7 +11,6 @@ public:
   virtual void main();
   virtual void exit();
   virtual void receiveKeyPress(int keyCode, char mappedKeyCode){};
-  virtual void receiveArrowKey(unsigned char direction){};
 };
 } // namespace programs
 #endif

@@ -26,6 +26,9 @@ public:
   const char *c_str() const;
   bool operator==(const string &str);
   bool operator==(const char *s);
+  // Utility functions
+  size_t length() const;
+  const char &operator[](size_t pos) const;
 };
 } // namespace std
 #endif

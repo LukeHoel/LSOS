@@ -14,8 +14,7 @@ unsigned char keymap[] = {
     /* Right shift */
     '*', 0,
     /* Alt */
-    ' ',
-    /* Space bar */
+    ' ', /* Space bar */
     0,
     /* Caps lock */
     0,
@@ -28,20 +27,12 @@ unsigned char keymap[] = {
     /* Scroll Lock */
     0,
     /* Home key */
-    upKey, /* Up Arrow */
-    0,
-    /* Page Up */
-    '-',
-
-    leftKey, /* Left Arrow */
-    0,
-
-    rightKey, /* Right Arrow */
-    '+',
-
-    0,
-    /* 79 - End key*/
-    downKey, /* Down Arrow */
+    0,      /* 72 Up Arrow */
+    0,      /* Page Up */
+    '-', 0, /*  75 Left Arrow */
+    0, 0,   /* 77 Right Arrow */
+    '+', 0, /* 79 - End key*/
+    0,      /* 80 Down Arrow */
     0,
     /* Page Down */
     0,

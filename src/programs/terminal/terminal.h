@@ -21,10 +21,8 @@ public:
   Terminal();
   // Overridden base class stuff
   void receiveKeyPress(int keyCode, unsigned char mappedKeyCode) {
-
     terminalPutChar(mappedKeyCode);
   };
-  void receiveArrowKey(unsigned char direction){};
   // Random access point for use in commands. Not stable
   char utilityWidthBuffer[VGA_WIDTH];
   void clearUtilityWidthBuffer();

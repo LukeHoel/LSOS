@@ -27,19 +27,10 @@ void runProgram(string name) {
 }
 
 void sendKeypressToActiveProgram(int keyCode, unsigned char mappedKeyCode) {
-  if (mappedKeyCode == leftKey || mappedKeyCode == rightKey ||
-      mappedKeyCode == upKey || mappedKeyCode == downKey) {
-    if (currentProgram == "terminal") {
-      terminal.receiveArrowKey(mappedKeyCode);
-    } else {
-      editor.receiveArrowKey(mappedKeyCode);
-    }
+  if (currentProgram == "terminal") {
+    terminal.receiveKeyPress(keyCode, mappedKeyCode);
   } else {
-    if (currentProgram == "terminal") {
-      terminal.receiveKeyPress(keyCode, mappedKeyCode);
-    } else {
-      editor.receiveKeyPress(keyCode, mappedKeyCode);
-    }
+    editor.receiveKeyPress(keyCode, mappedKeyCode);
   }
 }
 } // namespace programs

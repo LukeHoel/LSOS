@@ -47,4 +47,8 @@ string &string::operator=(char c) {
 const char *string::c_str() const { return innerCString; }
 bool string::operator==(const string &str) { return isSame(str.c_str()); }
 bool string::operator==(const char *s) { return isSame(s); }
+// Utility Functions
+size_t string::length() const { return strlen(innerCString); }
+const char &string::operator[](size_t pos) const { return innerCString[pos]; }
+
 } // namespace std

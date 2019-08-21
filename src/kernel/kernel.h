@@ -31,7 +31,8 @@ void setScreenEntry(char c, uint8_t color, size_t x, size_t y);
 // Program manager
 void sendKeypressToActiveProgram(int keyCode, unsigned char mappedKeyCode);
 // special keys
-const int leftKey = 255;
-const int rightKey = 254;
-const int upKey = 253;
-const int downKey = 252;
+const int upKey = 72;
+const int leftKey = 75;
+const int rightKey = 77;
+const int downKey = 80;
+const int escapeKey = 1;
